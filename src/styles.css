@@ -74,71 +74,71 @@ html, body {
 
 /* Utility classes personalizzate */
 @layer components {
-  .tw-card {
-    @apply tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-6;
+  .card {
+    @apply bg-white rounded-xl shadow-sm p-6;
   }
   
-  .tw-card-hover {
-    @apply tw-card tw-transition-all tw-duration-200 hover:tw-shadow-lg hover:tw-scale-105;
+  .card-hover {
+    @apply card transition-all duration-200 hover:shadow-lg hover:scale-105;
   }
   
-  .tw-btn-primary {
-    @apply tw-bg-indigo-600 tw-text-white tw-px-6 tw-py-3 tw-rounded-lg tw-font-medium tw-transition-colors hover:tw-bg-indigo-700 tw-shadow-sm;
+  .btn-primary {
+    @apply bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 shadow-sm;
   }
   
-  .tw-btn-secondary {
-    @apply tw-bg-gray-100 tw-text-gray-700 tw-px-6 tw-py-3 tw-rounded-lg tw-font-medium tw-transition-colors hover:tw-bg-gray-200 tw-shadow-sm;
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-medium transition-colors hover:bg-gray-200 shadow-sm;
   }
   
-  .tw-btn-danger {
-    @apply tw-bg-red-600 tw-text-white tw-px-6 tw-py-3 tw-rounded-lg tw-font-medium tw-transition-colors hover:tw-bg-red-700 tw-shadow-sm;
+  .btn-danger {
+    @apply bg-red-600 text-white px-6 py-3 rounded-lg font-medium transition-colors hover:bg-red-700 shadow-sm;
   }
   
-  .tw-page-header {
-    @apply tw-mb-8;
+  .page-header {
+    @apply mb-8;
   }
   
-  .tw-page-title {
-    @apply tw-text-3xl tw-font-bold tw-text-gray-900 tw-mb-2;
+  .page-title {
+    @apply text-3xl font-bold text-gray-900 mb-2;
   }
   
-  .tw-page-subtitle {
-    @apply tw-text-gray-600 tw-mb-6;
+  .page-subtitle {
+    @apply text-gray-600 mb-6;
   }
   
-  .tw-sidebar-item {
-    @apply tw-flex tw-items-center tw-px-4 tw-py-3 tw-mx-3 tw-rounded-lg tw-text-slate-300 tw-transition-all tw-duration-200 tw-cursor-pointer hover:tw-bg-slate-700 hover:tw-text-white;
+  .sidebar-item {
+    @apply flex items-center px-4 py-3 mx-3 rounded-lg text-slate-300 transition-all duration-200 cursor-pointer hover:bg-slate-700 hover:text-white;
   }
   
-  .tw-sidebar-item-active {
-    @apply tw-bg-indigo-600 tw-text-white tw-shadow-lg;
+  .sidebar-item-active {
+    @apply bg-indigo-600 text-white shadow-lg;
   }
   
-  .tw-status-badge {
-    @apply tw-inline-flex tw-items-center tw-px-3 tw-py-1 tw-rounded-full tw-text-xs tw-font-medium tw-uppercase tw-tracking-wide;
+  .status-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wide;
   }
   
-  .tw-status-active {
-    @apply tw-bg-green-100 tw-text-green-800;
+  .status-active {
+    @apply bg-green-100 text-green-800;
   }
   
-  .tw-status-inactive {
-    @apply tw-bg-red-100 tw-text-red-800;
+  .status-inactive {
+    @apply bg-red-100 text-red-800;
   }
   
-  .tw-status-warning {
-    @apply tw-bg-yellow-100 tw-text-yellow-800;
+  .status-warning {
+    @apply bg-yellow-100 text-yellow-800;
   }
   
-  .tw-input-field {
-    @apply tw-w-full tw-px-4 tw-py-3 tw-border tw-border-gray-300 tw-rounded-lg tw-focus:ring-2 tw-focus:ring-indigo-500 tw-focus:border-transparent;
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent;
   }
   
-  .tw-gradient-bg {
+  .gradient-bg {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   }
   
-  .tw-gradient-text {
+  .gradient-text {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -148,19 +148,19 @@ html, body {
 
 /* Animazioni personalizzate */
 @layer utilities {
-  .tw-animate-fade-in {
+  .animate-fade-in {
     animation: fadeIn 0.5s ease-in-out;
   }
   
-  .tw-animate-slide-up {
+  .animate-slide-up {
     animation: slideUp 0.5s ease-out;
   }
   
-  .tw-animate-scale-in {
+  .animate-scale-in {
     animation: scaleIn 0.3s ease-out;
   }
   
-  .tw-animate-bounce-in {
+  .animate-bounce-in {
     animation: bounceIn 0.6s ease-out;
   }
 }
@@ -386,52 +386,52 @@ html, body {
 
 /* Responsive design helpers */
 @media (max-width: 640px) {
-  .tw-mobile-hidden {
+  .mobile-hidden {
     display: none !important;
   }
   
-  .tw-mobile-full-width {
+  .mobile-full-width {
     width: 100% !important;
   }
 }
 
 @media (max-width: 768px) {
-  .tw-tablet-hidden {
+  .tablet-hidden {
     display: none !important;
   }
   
-  .tw-tablet-stack {
+  .tablet-stack {
     flex-direction: column !important;
   }
 }
 
 /* Layout utilities */
-.tw-layout-container {
+.layout-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
 }
 
-.tw-section-spacing {
+.section-spacing {
   padding: 2rem 0;
 }
 
-.tw-content-spacing {
+.content-spacing {
   padding: 1.5rem;
 }
 
 /* Focus states */
-.tw-focus-ring {
-  @apply tw-focus:ring-2 tw-focus:ring-indigo-500 tw-focus:ring-offset-2 tw-focus:outline-none;
+.focus-ring {
+  @apply focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none;
 }
 
 /* Loading states */
-.tw-loading {
+.loading {
   position: relative;
   overflow: hidden;
 }
 
-.tw-loading::after {
+.loading::after {
   content: '';
   position: absolute;
   top: 0;
