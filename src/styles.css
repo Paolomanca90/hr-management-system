@@ -1,29 +1,6 @@
 html, body { 
   height: 100%; 
   margin: 0; 
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: #f8fafc;
+  font-family: 'Roboto', "Helvetica Neue", sans-serif;
 }
 
-/* Componenti personalizzati */
-@layer components {
-  .card {
-    @apply bg-white rounded-xl shadow-sm p-6;
-  }
-  
-  .card-hover {
-    @apply card transition-all duration-200 hover:shadow-lg hover:scale-105;
-  }
-  
-  .btn-primary {
-    @apply bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 shadow-sm;
-  }
-  
-  .btn-secondary {
-    @apply bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-medium transition-colors hover:bg-gray-200 shadow-sm;
-  }
-  
-  .gradient-bg {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  }
-}

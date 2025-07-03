@@ -1,129 +1,196 @@
 <div class="space-y-6">
-  <!-- Header -->
-  <div class="bg-white rounded-xl shadow-sm p-6">
-    <div class="flex items-center justify-between">
-      <div>
-        <h1 class="text-3xl font-bold text-gray-900">Impostazioni</h1>
-        <p class="text-gray-600 mt-1">Configura le impostazioni del sistema HR</p>
-      </div>
-      <div class="flex items-center space-x-3">
-        <button 
-          mat-flat-button 
-          color="primary" 
-          class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700">
-          <mat-icon class="mr-2">save</mat-icon>
-          Salva Impostazioni
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- Sezioni delle impostazioni -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
     <!-- Menu laterale -->
-    <div class="bg-white rounded-xl shadow-sm p-6">
-      <h3 class="text-lg font-semibold text-gray-900 mb-4">Categorie</h3>
-      <nav class="space-y-2">
-        <a href="#" class="flex items-center px-4 py-3 rounded-lg bg-indigo-50 text-indigo-600 font-medium">
-          <mat-icon class="mr-3">business</mat-icon>
-          Azienda
-        </a>
-        <a href="#" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-50">
-          <mat-icon class="mr-3">people</mat-icon>
-          Dipendenti
-        </a>
-        <a href="#" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-50">
-          <mat-icon class="mr-3">security</mat-icon>
-          Sicurezza
-        </a>
-        <a href="#" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-50">
-          <mat-icon class="mr-3">notifications</mat-icon>
-          Notifiche
-        </a>
-        <a href="#" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-50">
-          <mat-icon class="mr-3">integration_instructions</mat-icon>
-          Integrazioni
-        </a>
-      </nav>
+    <div class="card bg-base-100 shadow-sm">
+      <div class="card-body">
+        <h3 class="text-lg font-semibold text-base-content mb-4">Categorie</h3>
+        <ul class="menu p-0 space-y-2">
+          <li>
+            <a class="active">
+              <i class="fas fa-building mr-3"></i>
+              Azienda
+            </a>
+          </li>
+          <li>
+            <a>
+              <i class="fas fa-users mr-3"></i>
+              Dipendenti
+            </a>
+          </li>
+          <li>
+            <a>
+              <i class="fas fa-shield-alt mr-3"></i>
+              Sicurezza
+            </a>
+          </li>
+          <li>
+            <a>
+              <i class="fas fa-bell mr-3"></i>
+              Notifiche
+            </a>
+          </li>
+          <li>
+            <a>
+              <i class="fas fa-plug mr-3"></i>
+              Integrazioni
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <!-- Contenuto impostazioni -->
-    <div class="lg:col-span-2 space-y-6">
+    <div class="lg:col-span-3 space-y-6">
       <!-- Impostazioni Azienda -->
-      <div class="bg-white rounded-xl shadow-sm p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Informazioni Azienda</h3>
-        <div class="space-y-4">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Nome Azienda</label>
-              <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" value="HR Company Srl">
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+          <h3 class="text-lg font-semibold text-base-content mb-4">Informazioni Azienda</h3>
+          <div class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text font-medium">Nome Azienda</span>
+                </label>
+                <input type="text" class="input input-bordered" value="HR Company Srl">
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text font-medium">Codice Fiscale</span>
+                </label>
+                <input type="text" class="input input-bordered" value="12345678901">
+              </div>
             </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Codice Fiscale</label>
-              <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" value="12345678901">
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Indirizzo</span>
+              </label>
+              <input type="text" class="input input-bordered" value="Via Roma 123, Milano">
             </div>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Indirizzo</label>
-            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" value="Via Roma 123, Milano">
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-              <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" value="info@hrcompany.com">
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Telefono</label>
-              <input type="tel" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" value="+39 02 1234567">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text font-medium">Email</span>
+                </label>
+                <input type="email" class="input input-bordered" value="info@hrcompany.com">
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text font-medium">Telefono</span>
+                </label>
+                <input type="tel" class="input input-bordered" value="+39 02 1234567">
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Impostazioni Orario -->
-      <div class="bg-white rounded-xl shadow-sm p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Orario di Lavoro</h3>
-        <div class="space-y-4">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Ore Lavorative Giornaliere</label>
-              <input type="number" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" value="8">
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+          <h3 class="text-lg font-semibold text-base-content mb-4">Orario di Lavoro</h3>
+          <div class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text font-medium">Ore Lavorative Giornaliere</span>
+                </label>
+                <input type="number" class="input input-bordered" value="8">
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text font-medium">Giorni Lavorativi Settimanali</span>
+                </label>
+                <input type="number" class="input input-bordered" value="5">
+              </div>
             </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Giorni Lavorativi Settimanali</label>
-              <input type="number" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" value="5">
-            </div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Orario di Ingresso</label>
-              <input type="time" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" value="09:00">
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Orario di Uscita</label>
-              <input type="time" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" value="18:00">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text font-medium">Orario di Ingresso</span>
+                </label>
+                <input type="time" class="input input-bordered" value="09:00">
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text font-medium">Orario di Uscita</span>
+                </label>
+                <input type="time" class="input input-bordered" value="18:00">
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Impostazioni Ferie -->
-      <div class="bg-white rounded-xl shadow-sm p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Gestione Ferie</h3>
-        <div class="space-y-4">
-          <div class="flex items-center justify-between">
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Approvazione Automatica</label>
-              <p class="text-xs text-gray-500">Le richieste di ferie vengono approvate automaticamente</p>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+          <h3 class="text-lg font-semibold text-base-content mb-4">Gestione Ferie</h3>
+          <div class="space-y-4">
+            <div class="form-control">
+              <label class="label cursor-pointer justify-start">
+                <input type="checkbox" class="toggle toggle-primary mr-4" />
+                <div>
+                  <span class="label-text font-medium">Approvazione Automatica</span>
+                  <p class="text-xs text-base-content/60">Le richieste di ferie vengono approvate automaticamente</p>
+                </div>
+              </label>
             </div>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" class="sr-only peer">
-              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
-            </label>
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Giorni di Ferie Annuali</span>
+              </label>
+              <input type="number" class="input input-bordered" value="22">
+            </div>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Giorni di Ferie Annuali</label>
-            <input type="number" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" value="22">
+        </div>
+      </div>
+
+      <!-- Impostazioni Sistema -->
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+          <h3 class="text-lg font-semibold text-base-content mb-4">Impostazioni Sistema</h3>
+          <div class="space-y-4">
+            <div class="form-control">
+              <label class="label cursor-pointer justify-start">
+                <input type="checkbox" class="toggle toggle-success mr-4" checked />
+                <div>
+                  <span class="label-text font-medium">Notifiche Email</span>
+                  <p class="text-xs text-base-content/60">Ricevi notifiche via email per eventi importanti</p>
+                </div>
+              </label>
+            </div>
+            <div class="form-control">
+              <label class="label cursor-pointer justify-start">
+                <input type="checkbox" class="toggle toggle-warning mr-4" />
+                <div>
+                  <span class="label-text font-medium">Backup Automatico</span>
+                  <p class="text-xs text-base-content/60">Esegui backup automatico dei dati ogni settimana</p>
+                </div>
+              </label>
+            </div>
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Lingua Sistema</span>
+              </label>
+              <select class="select select-bordered">
+                <option selected>Italiano</option>
+                <option>English</option>
+                <option>Français</option>
+                <option>Español</option>
+              </select>
+            </div>
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Fuso Orario</span>
+              </label>
+              <select class="select select-bordered">
+                <option selected>Europe/Rome (UTC+1)</option>
+                <option>Europe/London (UTC+0)</option>
+                <option>America/New_York (UTC-5)</option>
+                <option>Asia/Tokyo (UTC+9)</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -131,20 +198,25 @@
   </div>
 
   <!-- Sezione in costruzione -->
-  <div class="bg-white rounded-xl shadow-sm p-12 text-center">
-    <div class="bg-gray-100 rounded-full p-6 mx-auto mb-4 w-24 h-24 flex items-center justify-center">
-      <mat-icon class="text-gray-400 text-4xl">settings</mat-icon>
-    </div>
-    <h3 class="text-2xl font-bold text-gray-900 mb-2">Impostazioni Avanzate</h3>
-    <p class="text-gray-600 mb-6">Funzionalità avanzate in fase di sviluppo</p>
-    <div class="bg-blue-50 rounded-lg p-4 text-left max-w-md mx-auto">
-      <h4 class="font-semibold text-blue-900 mb-2">Prossime Funzionalità:</h4>
-      <ul class="text-blue-800 text-sm space-y-1">
-        <li>• Integrazione con sistemi esterni</li>
-        <li>• Backup automatico dei dati</li>
-        <li>• Personalizzazione temi</li>
-        <li>• Configurazione avanzata permessi</li>
-      </ul>
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body text-center py-12">
+      <div class="bg-base-200 rounded-full p-6 mx-auto mb-4 w-24 h-24 flex items-center justify-center">
+        <i class="fas fa-cogs text-base-content/40 text-4xl"></i>
+      </div>
+      <h3 class="text-2xl font-bold text-base-content mb-2">Impostazioni Avanzate</h3>
+      <p class="text-base-content/70 mb-6">Funzionalità avanzate in fase di sviluppo</p>
+      <div class="alert alert-info max-w-md mx-auto">
+        <i class="fas fa-info-circle"></i>
+        <div>
+          <h4 class="font-semibold mb-2">Prossime Funzionalità:</h4>
+          <ul class="text-sm space-y-1 text-left">
+            <li>• Integrazione con sistemi esterni</li>
+            <li>• Backup automatico dei dati</li>
+            <li>• Personalizzazione temi</li>
+            <li>• Configurazione avanzata permessi</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>

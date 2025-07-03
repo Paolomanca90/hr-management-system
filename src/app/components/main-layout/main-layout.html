@@ -1,129 +1,161 @@
-<mat-sidenav-container class="h-screen bg-gray-50">
+<div class="drawer lg:drawer-open min-h-screen bg-base-200">
+  <input id="drawer-toggle" type="checkbox" class="drawer-toggle" [(ngModel)]="sidenavOpened" />
+  
   <!-- Sidebar -->
-  <mat-sidenav 
-    #sidenav 
-    [opened]="sidenavOpened" 
-    mode="side" 
-    class="w-64 bg-gradient-to-b from-slate-800 to-slate-900 shadow-2xl">
-    
-    <div class="h-full flex flex-col">
+  <div class="drawer-side">
+    <label for="drawer-toggle" aria-label="close sidebar" class="drawer-overlay"></label>
+    <aside class="min-h-full bg-base-100 dark:bg-base-300" 
+           [class.w-64]="sidenavOpened" 
+           [class.w-16]="!sidenavOpened">
+      
       <!-- Header della sidebar -->
-      <div class="p-6 border-b border-slate-700">
-        <div class="flex items-center mb-6">
-          <div class="bg-indigo-600 rounded-lg p-2 mr-3">
-            <mat-icon class="text-white text-2xl">business</mat-icon>
+      <div class="p-4 border-b border-base-300">
+        <div class="flex items-center mb-4">
+          <div class="bg-primary rounded-lg p-2 px-4 mr-3">
+            <i class="fas fa-building text-white text-xl"></i>
           </div>
-          <div *ngIf="sidenavOpened" class="text-white">
+          <div *ngIf="sidenavOpened" class="text-base-content">
             <h2 class="text-lg font-bold">HR System</h2>
-            <p class="text-slate-300 text-sm">Management</p>
+            <p class="text-base-content/70 text-sm">Management</p>
           </div>
         </div>
         
         <!-- Info utente -->
-        <div *ngIf="currentUser && sidenavOpened" class="bg-slate-700 rounded-lg p-4">
+        <div *ngIf="currentUser && sidenavOpened" class="bg-base-200 rounded-lg p-3">
           <div class="flex items-center">
-            <div class="bg-indigo-500 rounded-full p-2 mr-3 items-center justify-center flex">
-              <mat-icon class="text-white">account_circle</mat-icon>
+            <div class="avatar placeholder mr-3">
+              <div class="bg-primary text-primary-content rounded-full w-8">
+                <i class="fas fa-user"></i>
+              </div>
             </div>
-            <div class="text-white flex-1">
+            <div class="text-base-content flex-1 min-w-0">
               <div class="font-medium truncate">{{ currentUser.username }}</div>
-              <div class="text-slate-300 text-sm truncate">{{ currentUser.company }}</div>
+              <div class="text-base-content/70 text-sm truncate">{{ currentUser.company }}</div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Menu di navigazione -->
-      <nav class="flex-1 p-4">
-        <div class="space-y-2">
-          <a 
-            *ngFor="let item of menuItems" 
-            [routerLink]="item.route"
-            routerLinkActive="bg-indigo-600 text-white shadow-lg"
-            class="flex items-center px-4 py-3 rounded-lg text-slate-300 transition-all duration-200 hover:bg-slate-700 hover:text-white group">
-            <mat-icon class="mr-3 text-xl group-hover:scale-110 transition-transform">{{ item.icon }}</mat-icon>
+      <ul class="menu p-4 space-y-2">
+        <li *ngFor="let item of menuItems">
+          <a [routerLink]="item.route"
+             routerLinkActive="active"
+             class="flex items-center transition-all duration-200 group">
+            <i [class]="item.icon + ' text-lg'" 
+               [class.mr-3]="sidenavOpened"></i>
             <span *ngIf="sidenavOpened" class="font-medium">{{ item.label }}</span>
           </a>
-        </div>
-      </nav>
+        </li>
+      </ul>
 
       <!-- Footer della sidebar -->
-      <div class="p-4 border-t border-slate-700" *ngIf="sidenavOpened">
-        <button 
-          mat-button 
-          (click)="logout()" 
-          class="w-full flex items-center justify-center px-4 py-3 rounded-lg text-slate-300 transition-colors hover:bg-red-600 hover:text-white">
-          <mat-icon class="mr-2">logout</mat-icon>
+      <div class="absolute bottom-4 left-4 right-4 space-y-2" *ngIf="sidenavOpened">
+        <!-- Toggle Dark Mode -->
+        <div class="flex items-center justify-center w-full btn btn-ghost btn-sm" (click)="toggleTheme()">      
+          <label class="swap swap-rotate">
+            <input type="checkbox" 
+                   [checked]="isDarkMode()"  />
+            <i [class]="getThemeIcon() + ' swap-on text-lg'"></i>
+            <i [class]="getThemeIcon() + ' swap-off text-lg'"></i>
+          </label>
+          <span class="ml-2">{{ getThemeLabel() }}</span>
+        </div>
+        
+        <button class="btn btn-error btn-sm w-full" (click)="logout()">
+          <i class="fas fa-sign-out-alt mr-2"></i>
           <span>Logout</span>
         </button>
       </div>
-    </div>
-  </mat-sidenav>
+
+      <!-- Toggle per sidebar compatta -->
+      <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2" *ngIf="!sidenavOpened">
+        <div class="tooltip tooltip-right" [attr.data-tip]="getThemeLabel()">
+          <label class="swap swap-rotate btn btn-ghost btn-sm btn-circle">
+            <input type="checkbox" 
+                   [checked]="isDarkMode()" 
+                   (change)="toggleTheme()" />
+            <i [class]="getThemeIcon() + ' swap-on'"></i>
+            <i [class]="getThemeIcon() + ' swap-off'"></i>
+          </label>
+        </div>
+        
+        <div class="tooltip tooltip-right mt-2" [attr.data-tip]="'Logout'">
+          <button class="btn btn-error btn-sm btn-circle" (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+  </div>
 
   <!-- Contenuto principale -->
-  <mat-sidenav-content class="flex flex-col min-h-screen">
-    <!-- Toolbar superiore -->
-    <mat-toolbar class="bg-white shadow-sm border-b border-gray-200">
-      <button 
-        mat-icon-button 
-        (click)="toggleSidenav()" 
-        class="text-gray-600 hover:text-gray-900 transition-colors">
-        <mat-icon>menu</mat-icon>
-      </button>
+  <div class="drawer-content flex flex-col">
+    <!-- Navbar -->
+    <div class="navbar bg-base-100 shadow-sm border-b border-base-300">
+      <div class="flex-none lg:hidden">
+        <label for="drawer-toggle" class="btn btn-square btn-ghost">
+          <i class="fas fa-bars text-lg"></i>
+        </label>
+      </div>
       
-      <span class="flex-1"></span>
+      <div class="flex-none hidden lg:block">
+        <button class="btn btn-square btn-ghost" (click)="toggleSidenav()">
+          <i class="fas fa-bars text-lg"></i>
+        </button>
+      </div>
       
-      <!-- Notifiche -->
-      <button mat-icon-button class="text-gray-600 hover:text-gray-900 mr-2">
-        <mat-icon [matBadge]="3" matBadgeColor="warn" matBadgeSize="small">notifications</mat-icon>
-      </button>
+      <div class="flex-1">
+        <span class="text-xl font-semibold ml-2">HR Management System</span>
+      </div>
       
-      <!-- Menu utente -->
-      <button 
-        mat-icon-button 
-        [matMenuTriggerFor]="userMenu"
-        class="text-gray-600 hover:text-gray-900">
-        <mat-icon>account_circle</mat-icon>
-      </button>
-      
-      <mat-menu #userMenu="matMenu" class="mt-2">
-        <div class="px-4 py-3 border-b border-gray-200">
-          <div class="flex items-center">
-            <div class="bg-indigo-600 rounded-full p-2 mr-3">
-              <mat-icon class="text-white text-sm">person</mat-icon>
+      <div class="flex-none">
+        <!-- Notifiche -->
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+            <div class="indicator">
+              <i class="fas fa-bell text-lg"></i>
+              <span class="badge badge-sm badge-primary indicator-item">3</span>
             </div>
-            <div>
-              <div class="font-medium text-gray-900">{{ currentUser?.username }}</div>
-              <div class="text-gray-500 text-sm">{{ currentUser?.company }}</div>
+          </div>
+          <div tabindex="0" class="dropdown-content card card-compact w-64 p-2 shadow bg-base-100 z-[1]">
+            <div class="card-body">
+              <h3 class="card-title">Notifiche</h3>
+              <div class="space-y-2">
+                <div class="text-sm">Nuovo dipendente aggiunto</div>
+                <div class="text-sm">Ferie da approvare</div>
+                <div class="text-sm">Report mensile pronto</div>
+              </div>
             </div>
           </div>
         </div>
         
-        <button mat-menu-item class="flex items-center py-3">
-          <mat-icon class="mr-3 text-gray-500">person</mat-icon>
-          <span>Profilo</span>
-        </button>
-        
-        <button mat-menu-item class="flex items-center py-3">
-          <mat-icon class="mr-3 text-gray-500">settings</mat-icon>
-          <span>Impostazioni</span>
-        </button>
-        
-        <mat-divider></mat-divider>
-        
-        <button 
-          mat-menu-item 
-          (click)="logout()" 
-          class="flex items-center py-3 text-red-600 hover:bg-red-50">
-          <mat-icon class="mr-3">logout</mat-icon>
-          <span>Logout</span>
-        </button>
-      </mat-menu>
-    </mat-toolbar>
+        <!-- Menu utente -->
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+            <div class="avatar placeholder">
+              <div class="bg-primary text-primary-content rounded-full w-10">
+                <i class="fas fa-user"></i>
+              </div>
+            </div>
+          </div>
+          <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 z-[1]">
+            <li class="menu-title">
+              <span>{{ currentUser?.username }}</span>
+              <span class="text-xs">{{ currentUser?.company }}</span>
+            </li>
+            <li><a><i class="fas fa-user mr-2"></i> Profilo</a></li>
+            <li><a><i class="fas fa-cog mr-2"></i> Impostazioni</a></li>
+            <li class="divider"></li>
+            <li><a (click)="logout()" class="text-error"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
     <!-- Area del contenuto -->
-    <div class="flex-1 p-6 bg-gray-50">
+    <main class="flex-1 p-6 bg-base-200">
       <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    </main>
+  </div>
+</div>

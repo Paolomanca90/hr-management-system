@@ -1,17 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService, User } from '../../services/auth.service';
+import { ThemeService, Theme } from '../../services/theme.service';
 import { Router, RouterOutlet, RouterModule } from '@angular/router';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { MatBadgeModule } from '@angular/material/badge';
 
 export interface MenuItem {
   icon: string;
@@ -22,18 +15,10 @@ export interface MenuItem {
 @Component({
   selector: 'app-main-layout',
   imports: [
-    MatSidenavModule,
-    MatToolbarModule,
-    MatListModule,
-    MatIconModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatFormFieldModule, 
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterOutlet,
-    MatBadgeModule,
     RouterLink,
     RouterLinkActive,
     RouterModule
@@ -44,17 +29,19 @@ export interface MenuItem {
 export class MainLayout implements OnInit {
   currentUser: User | null = null;
   sidenavOpened = true;
+  currentTheme: Theme = 'auto';
   
   menuItems: MenuItem[] = [
-    { icon: 'dashboard', label: 'Dashboard', route: '/app/dashboard' },
-    { icon: 'people', label: 'Dipendenti', route: '/app/employees' },
-    { icon: 'account_balance_wallet', label: 'Buste Paga', route: '/app/payroll' },
-    { icon: 'assessment', label: 'Report', route: '/app/reports' },
-    { icon: 'settings', label: 'Impostazioni', route: '/app/settings' }
+    { icon: 'fas fa-tachometer-alt', label: 'Dashboard', route: '/app/dashboard' },
+    { icon: 'fas fa-users', label: 'Dipendenti', route: '/app/employees' },
+    { icon: 'fas fa-money-check-alt', label: 'Buste Paga', route: '/app/payroll' },
+    { icon: 'fas fa-chart-bar', label: 'Report', route: '/app/reports' },
+    { icon: 'fas fa-cog', label: 'Impostazioni', route: '/app/settings' }
   ];
 
   constructor(
     private authService: AuthService,
+    private themeService: ThemeService,
     public router: Router
   ) { }
 
@@ -62,10 +49,31 @@ export class MainLayout implements OnInit {
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
     });
+    
+    this.themeService.currentTheme$.subscribe(theme => {
+      this.currentTheme = theme;
+    });
   }
 
   toggleSidenav(): void {
     this.sidenavOpened = !this.sidenavOpened;
+  }
+
+  toggleTheme(): void {
+    this.themeService.animateThemeChange();
+    this.themeService.toggleTheme();
+  }
+
+  getThemeIcon(): string {
+    return this.themeService.getThemeIcon();
+  }
+
+  getThemeLabel(): string {
+    return this.themeService.getThemeLabel();
+  }
+
+  isDarkMode(): boolean {
+    return this.themeService.isDarkMode();
   }
 
   logout(): void {

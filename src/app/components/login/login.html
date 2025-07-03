@@ -1,87 +1,99 @@
-<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-  <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
-    <div class="text-center mb-8">
-      <div class="flex justify-center mb-4">
-        <div class="bg-indigo-600 rounded-full p-3 px-4">
-          <mat-icon class="text-white text-3xl">business</mat-icon>
+<div class="min-h-screen bg-gradient-to-br from-blue-400 to-blue-200 flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <div class="card bg-base-100 shadow-2xl">
+      <div class="card-body">
+        <div class="text-center mb-8">
+          <div class="flex justify-center mb-4">
+            <div class="bg-primary rounded-full p-4 px-6">
+              <i class="fas fa-building text-white text-3xl"></i>
+            </div>
+          </div>
+          <h1 class="text-2xl font-bold text-base-content mb-2">HR Management System</h1>
+          <p class="text-base-content/70">Accedi al tuo account aziendale</p>
+        </div>
+        
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+          <!-- Username Field -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-medium">Username</span>
+            </label>
+            <div class="relative">
+              <input 
+                type="text"
+                formControlName="username"
+                placeholder="Inserisci username"
+                class="input input-bordered w-full pr-12"
+                [class.input-error]="submitted && f['username'].errors?.['required']">
+              <i class="fas fa-user absolute right-4 top-1/2 transform -translate-y-1/2 text-base-content/40"></i>
+            </div>
+            <div *ngIf="submitted && f['username'].errors?.['required']" class="label">
+              <span class="label-text-alt text-error">Username richiesto</span>
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-medium">Password</span>
+            </label>
+            <div class="relative">
+              <input 
+                type="password"
+                formControlName="password"
+                placeholder="Inserisci password"
+                class="input input-bordered w-full pr-12"
+                [class.input-error]="submitted && f['password'].errors?.['required']">
+              <i class="fas fa-lock absolute right-4 top-1/2 transform -translate-y-1/2 text-base-content/40"></i>
+            </div>
+            <div *ngIf="submitted && f['password'].errors?.['required']" class="label">
+              <span class="label-text-alt text-error">Password richiesta</span>
+            </div>
+          </div>
+
+          <!-- Domain Field -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-medium">Dominio</span>
+            </label>
+            <div class="relative">
+              <input 
+                type="text"
+                formControlName="domain"
+                placeholder="Inserisci dominio azienda"
+                class="input input-bordered w-full pr-12"
+                [class.input-error]="submitted && f['domain'].errors?.['required']">
+              <i class="fas fa-globe absolute right-4 top-1/2 transform -translate-y-1/2 text-base-content/40"></i>
+            </div>
+            <div *ngIf="submitted && f['domain'].errors?.['required']" class="label">
+              <span class="label-text-alt text-error">Dominio richiesto</span>
+            </div>
+          </div>
+
+          <!-- Error Message -->
+          <div class="alert alert-error" *ngIf="error">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>{{ error }}</span>
+          </div>
+
+          <!-- Submit Button -->
+          <button 
+            type="submit" 
+            [disabled]="loading" 
+            class="btn btn-primary w-full"
+            [class.loading]="loading">
+            <span *ngIf="loading" class="loading loading-spinner loading-sm"></span>
+            <span *ngIf="loading">Accesso in corso...</span>
+            <span *ngIf="!loading">Accedi</span>
+          </button>
+        </form>
+
+        <div class="divider"></div>
+        
+        <div class="text-center text-sm text-base-content/60">
+          <p>Sistema di gestione delle risorse umane</p>
         </div>
       </div>
-      <h1 class="text-2xl font-bold text-gray-900 mb-2">HR Management System</h1>
-      <p class="text-gray-600">Accedi al tuo account aziendale</p>
-    </div>
-    
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
-      <!-- Username Field -->
-      <div class="relative">
-        <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
-        <div class="relative">
-          <input 
-            type="text"
-            formControlName="username"
-            placeholder="Inserisci username"
-            class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors">
-          <mat-icon class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">person</mat-icon>
-        </div>
-        <div *ngIf="submitted && f['username'].errors?.['required']" class="mt-1 text-sm text-red-600">
-          Username richiesto
-        </div>
-      </div>
-
-      <!-- Password Field -->
-      <div class="relative">
-        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-        <div class="relative">
-          <input 
-            type="password"
-            formControlName="password"
-            placeholder="Inserisci password"
-            class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors">
-          <mat-icon class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">lock</mat-icon>
-        </div>
-        <div *ngIf="submitted && f['password'].errors?.['required']" class="mt-1 text-sm text-red-600">
-          Password richiesta
-        </div>
-      </div>
-
-      <!-- Domain Field -->
-      <div class="relative">
-        <label class="block text-sm font-medium text-gray-700 mb-2">Dominio</label>
-        <div class="relative">
-          <input 
-            type="text"
-            formControlName="domain"
-            placeholder="Inserisci dominio azienda"
-            class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors">
-          <mat-icon class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">domain</mat-icon>
-        </div>
-        <div *ngIf="submitted && f['domain'].errors?.['required']" class="mt-1 text-sm text-red-600">
-          Dominio richiesto
-        </div>
-      </div>
-
-      <!-- Error Message -->
-      <div class="bg-red-50 border border-red-200 rounded-lg p-4" *ngIf="error">
-        <div class="flex items-center">
-          <mat-icon class="text-red-500 mr-2">error</mat-icon>
-          <span class="text-red-700 text-sm">{{ error }}</span>
-        </div>
-      </div>
-
-      <!-- Submit Button -->
-      <button 
-        type="submit" 
-        [disabled]="loading" 
-        class="w-full py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-lg transition-all duration-200 hover:from-indigo-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-        <span *ngIf="loading" class="flex items-center justify-center">
-          <mat-icon class="animate-spin mr-2">autorenew</mat-icon>
-          Accesso in corso...
-        </span>
-        <span *ngIf="!loading">Accedi</span>
-      </button>
-    </form>
-
-    <div class="mt-6 text-center text-sm text-gray-500">
-      <p>Sistema di gestione delle risorse umane</p>
     </div>
   </div>
 </div>

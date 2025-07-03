@@ -1,81 +1,76 @@
 <div class="space-y-6">
   <!-- Header -->
-  <div class="bg-white rounded-xl shadow-sm p-6">
-    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-      <div>
-        <h1 class="text-3xl font-bold text-gray-900">Gestione Dipendenti</h1>
-        <p class="text-gray-600 mt-1">Visualizza e gestisci tutti i dipendenti dell'azienda</p>
-      </div>
-      <div class="flex items-center space-x-3">
-        <button 
-          mat-flat-button 
-          color="primary" 
-          (click)="addNewEmployee()"
-          class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
-          <mat-icon class="mr-2">person_add</mat-icon>
-          Nuovo Dipendente
-        </button>
-        <button 
-          mat-icon-button 
-          class="text-gray-400 hover:text-gray-600"
-          (click)="refreshEmployees()">
-          <mat-icon>refresh</mat-icon>
-        </button>
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-3xl font-bold text-base-content">Gestione Dipendenti</h1>
+          <p class="text-base-content/70 mt-1">Visualizza e gestisci tutti i dipendenti dell'azienda</p>
+        </div>
+        <div class="flex items-center space-x-3">
+          <button class="btn btn-primary" (click)="addNewEmployee()">
+            <i class="fas fa-user-plus mr-2"></i>
+            Nuovo Dipendente
+          </button>
+          <button class="btn btn-ghost btn-circle" (click)="refreshEmployees()">
+            <i class="fas fa-sync-alt"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Filtri -->
-  <div class="bg-white rounded-xl shadow-sm p-6">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-      <div class="md:col-span-2">
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Cerca dipendente</mat-label>
-          <input 
-            matInput 
-            [(ngModel)]="searchTerm" 
-            (input)="applyFilters()" 
-            placeholder="Nome, cognome o email">
-          <mat-icon matSuffix class="text-gray-400">search</mat-icon>
-        </mat-form-field>
-      </div>
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+        <div class="md:col-span-2">
+          <label class="label">
+            <span class="label-text">Cerca dipendente</span>
+          </label>
+          <div class="relative">
+            <input 
+              type="text"
+              [(ngModel)]="searchTerm" 
+              (input)="applyFilters()" 
+              placeholder="Nome, cognome o email"
+              class="input input-bordered w-full pr-10">
+            <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-base-content/40"></i>
+          </div>
+        </div>
 
-      <div>
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Dipartimento</mat-label>
-          <mat-select [(value)]="selectedDepartment" (selectionChange)="applyFilters()">
-            <mat-option value="">Tutti i dipartimenti</mat-option>
-            <mat-option *ngFor="let dept of departments" [value]="dept">
-              {{ dept }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+        <div>
+          <label class="label">
+            <span class="label-text">Dipartimento</span>
+          </label>
+          <select class="select select-bordered w-full" [(ngModel)]="selectedDepartment" (change)="applyFilters()">
+            <option value="">Tutti i dipartimenti</option>
+            <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+          </select>
+        </div>
 
-      <div>
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Stato</mat-label>
-          <mat-select [(value)]="selectedStatus" (selectionChange)="applyFilters()">
-            <mat-option value="">Tutti gli stati</mat-option>
-            <mat-option value="active">Attivo</mat-option>
-            <mat-option value="inactive">Inattivo</mat-option>
-            <mat-option value="on-leave">In Ferie</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div>
+          <label class="label">
+            <span class="label-text">Stato</span>
+          </label>
+          <select class="select select-bordered w-full" [(ngModel)]="selectedStatus" (change)="applyFilters()">
+            <option value="">Tutti gli stati</option>
+            <option value="active">Attivo</option>
+            <option value="inactive">Inattivo</option>
+            <option value="on-leave">In Ferie</option>
+          </select>
+        </div>
       </div>
-    </div>
-    
-    <div class="flex items-center justify-between mt-4">
-      <div class="text-sm text-gray-500">
-        Trovati {{ filteredEmployees.length }} dipendenti su {{ employees.length }}
+      
+      <div class="flex items-center justify-between mt-4">
+        <div class="text-sm text-base-content/60">
+          Trovati {{ filteredEmployees.length }} dipendenti su {{ employees.length }}
+        </div>
+        <button class="btn btn-ghost btn-sm" (click)="clearFilters()">
+          <i class="fas fa-times mr-1"></i>
+          Pulisci Filtri
+        </button>
       </div>
-      <button 
-        mat-button 
-        (click)="clearFilters()" 
-        class="text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg">
-        <mat-icon class="mr-1">clear</mat-icon>
-        Pulisci Filtri
-      </button>
     </div>
   </div>
 
@@ -83,102 +78,84 @@
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <div 
       *ngFor="let employee of filteredEmployees" 
-      class="bg-white rounded-xl shadow-sm p-6 transition-all duration-200 hover:shadow-lg hover:scale-105">
+      class="card bg-base-100 shadow-sm hover:shadow-lg transition-all duration-200 hover:scale-105">
       
-      <!-- Header della card -->
-      <div class="flex items-start justify-between mb-4">
-        <div class="flex items-center space-x-3">
-          <div class="bg-indigo-100 rounded-full p-3 flex items-center justify-center">
-            <mat-icon class="text-indigo-600">account_circle</mat-icon>
+      <div class="card-body">
+        <!-- Header della card -->
+        <div class="flex items-start justify-between mb-4">
+          <div class="flex items-center space-x-3">
+            <div class="avatar placeholder">
+              <div class="bg-primary/10 text-primary rounded-full w-12">
+                <i class="fas fa-user text-lg"></i>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-base-content">
+                {{ employee.firstName }} {{ employee.lastName }}
+              </h3>
+              <p class="text-base-content/70 text-sm">{{ employee.position }}</p>
+            </div>
           </div>
-          <div>
-            <h3 class="text-lg font-semibold text-gray-900">
-              {{ employee.firstName }} {{ employee.lastName }}
-            </h3>
-            <p class="text-gray-600 text-sm">{{ employee.position }}</p>
+          
+          <div class="flex items-center space-x-2">
+            <span class="badge" [ngClass]="getStatusColor(employee.status)">
+              {{ getStatusText(employee.status) }}
+            </span>
+            
+            <div class="dropdown dropdown-end">
+              <div tabindex="0" role="button" class="btn btn-ghost btn-sm btn-circle">
+                <i class="fas fa-ellipsis-v"></i>
+              </div>
+              <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                <li><a (click)="editEmployee(employee)"><i class="fas fa-edit mr-2"></i>Modifica</a></li>
+                <li><a (click)="viewEmployee(employee)"><i class="fas fa-eye mr-2"></i>Visualizza</a></li>
+                <li class="divider"></li>
+                <li><a (click)="deleteEmployee(employee)" class="text-error"><i class="fas fa-trash mr-2"></i>Elimina</a></li>
+              </ul>
+            </div>
           </div>
         </div>
-        
-        <div class="flex items-center space-x-2">
-          <span 
-            class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
-            [class.bg-green-100]="employee.status === 'active'"
-            [class.text-green-800]="employee.status === 'active'"
-            [class.bg-red-100]="employee.status === 'inactive'"
-            [class.text-red-800]="employee.status === 'inactive'"
-            [class.bg-yellow-100]="employee.status === 'on-leave'"
-            [class.text-yellow-800]="employee.status === 'on-leave'">
-            {{ getStatusText(employee.status) }}
-          </span>
-          
-          <button 
-            mat-icon-button 
-            [matMenuTriggerFor]="menu"
-            class="text-gray-400 hover:text-gray-600">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          
-          <mat-menu #menu="matMenu" class="full-menu">
-            <button mat-menu-item (click)="editEmployee(employee)" class="menu-item-default">
-              <mat-icon>edit</mat-icon>
-              <span>Modifica</span>
-            </button>
-            <button mat-menu-item (click)="viewEmployee(employee)" class="menu-item-default">
-              <mat-icon>visibility</mat-icon>
-              <span>Visualizza</span>
-            </button>
-            <mat-divider></mat-divider>
-            <button mat-menu-item (click)="deleteEmployee(employee)" class="menu-item-delete">
-              <mat-icon>delete</mat-icon>
-              <span>Elimina</span>
-            </button>
-          </mat-menu>
-        </div>
-      </div>
 
-      <!-- Dettagli dipendente -->
-      <div class="space-y-3">
-        <div class="flex items-center space-x-3 text-sm text-gray-600">
-          <mat-icon class="text-gray-400 text-lg">email</mat-icon>
-          <span class="truncate">{{ employee.email }}</span>
+        <!-- Dettagli dipendente -->
+        <div class="space-y-3">
+          <div class="flex items-center space-x-3 text-sm text-base-content/70">
+            <i class="fas fa-envelope text-base-content/40 w-4"></i>
+            <span class="truncate">{{ employee.email }}</span>
+          </div>
+          
+          <div class="flex items-center space-x-3 text-sm text-base-content/70">
+            <i class="fas fa-building text-base-content/40 w-4"></i>
+            <span>{{ employee.department }}</span>
+          </div>
+          
+          <div class="flex items-center space-x-3 text-sm text-base-content/70">
+            <i class="fas fa-calendar text-base-content/40 w-4"></i>
+            <span>Assunto il {{ employee.hireDate | date:'dd/MM/yyyy' }}</span>
+          </div>
+          
+          <div class="flex items-center space-x-3 text-sm text-base-content/70">
+            <i class="fas fa-euro-sign text-base-content/40 w-4"></i>
+            <span class="font-medium">{{ formatCurrency(employee.salary) }}</span>
+          </div>
         </div>
-        
-        <div class="flex items-center space-x-3 text-sm text-gray-600">
-          <mat-icon class="text-gray-400 text-lg">business</mat-icon>
-          <span>{{ employee.department }}</span>
-        </div>
-        
-        <div class="flex items-center space-x-3 text-sm text-gray-600">
-          <mat-icon class="text-gray-400 text-lg">calendar_today</mat-icon>
-          <span>Assunto il {{ employee.hireDate | date:'dd/MM/yyyy' }}</span>
-        </div>
-        
-        <div class="flex items-center space-x-3 text-sm text-gray-600">
-          <mat-icon class="text-gray-400 text-lg">euro</mat-icon>
-          <span class="font-medium">{{ formatCurrency(employee.salary) }}</span>
-        </div>
-      </div>
 
-      <!-- Footer della card -->
-      <div class="flex items-center justify-between mt-6 pt-4 border-t border-gray-200">
-        <div class="text-xs text-gray-500">
-          ID: {{ employee.id }}
-        </div>
-        <div class="flex space-x-2">
-          <button 
-            mat-icon-button 
-            size="small" 
-            class="text-gray-400 hover:text-indigo-600"
-            (click)="sendMessage(employee)">
-            <mat-icon class="text-sm">message</mat-icon>
-          </button>
-          <button 
-            mat-icon-button 
-            size="small" 
-            class="text-gray-400 hover:text-indigo-600"
-            (click)="viewProfile(employee)">
-            <mat-icon class="text-sm">person</mat-icon>
-          </button>
+        <!-- Footer della card -->
+        <div class="card-actions justify-between items-center mt-6 pt-4 border-t border-base-300">
+          <div class="text-xs text-base-content/50">
+            ID: {{ employee.id }}
+          </div>
+          <div class="flex space-x-2">
+            <div class="tooltip" data-tip="Invia messaggio">
+              <button class="btn btn-ghost btn-sm btn-circle" (click)="sendMessage(employee)">
+                <i class="fas fa-comment"></i>
+              </button>
+            </div>
+            <div class="tooltip" data-tip="Visualizza profilo">
+              <button class="btn btn-ghost btn-sm btn-circle" (click)="viewProfile(employee)">
+                <i class="fas fa-user-circle"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -187,36 +164,36 @@
   <!-- Messaggio quando non ci sono risultati -->
   <div 
     *ngIf="filteredEmployees.length === 0" 
-    class="bg-white rounded-xl shadow-sm p-12 text-center">
-    <div class="bg-gray-100 rounded-full p-6 mx-auto mb-4 w-24 h-24 flex items-center justify-center">
-      <mat-icon class="text-gray-400 text-4xl">people_outline</mat-icon>
+    class="card bg-base-100 shadow-sm">
+    <div class="card-body text-center py-12">
+      <div class="bg-base-200 rounded-full p-6 mx-auto mb-4 w-24 h-24 flex items-center justify-center">
+        <i class="fas fa-users text-base-content/40 text-4xl"></i>
+      </div>
+      <h3 class="text-lg font-semibold text-base-content mb-2">Nessun dipendente trovato</h3>
+      <p class="text-base-content/70 mb-6">Modifica i filtri di ricerca o aggiungi un nuovo dipendente</p>
+      <button class="btn btn-primary" (click)="addNewEmployee()">
+        <i class="fas fa-user-plus mr-2"></i>
+        Aggiungi Dipendente
+      </button>
     </div>
-    <h3 class="text-lg font-semibold text-gray-900 mb-2">Nessun dipendente trovato</h3>
-    <p class="text-gray-600 mb-6">Modifica i filtri di ricerca o aggiungi un nuovo dipendente</p>
-    <button 
-      mat-flat-button 
-      color="primary" 
-      (click)="addNewEmployee()"
-      class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700">
-      <mat-icon class="mr-2">person_add</mat-icon>
-      Aggiungi Dipendente
-    </button>
   </div>
 
   <!-- Paginazione -->
-  <div class="bg-white rounded-xl shadow-sm p-4" *ngIf="filteredEmployees.length > 0">
-    <div class="flex items-center justify-between">
-      <div class="text-sm text-gray-500">
-        Visualizzando {{ filteredEmployees.length }} risultati
-      </div>
-      <div class="flex items-center space-x-2">
-        <button mat-icon-button class="text-gray-400" disabled>
-          <mat-icon>chevron_left</mat-icon>
-        </button>
-        <span class="text-sm text-gray-600">Pagina 1 di 1</span>
-        <button mat-icon-button class="text-gray-400" disabled>
-          <mat-icon>chevron_right</mat-icon>
-        </button>
+  <div class="card bg-base-100 shadow-sm" *ngIf="filteredEmployees.length > 0">
+    <div class="card-body">
+      <div class="flex items-center justify-between">
+        <div class="text-sm text-base-content/60">
+          Visualizzando {{ filteredEmployees.length }} risultati
+        </div>
+        <div class="join">
+          <button class="join-item btn btn-sm" disabled>
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="join-item btn btn-sm">Pagina 1 di 1</button>
+          <button class="join-item btn btn-sm" disabled>
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -1,17 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatChipsModule } from '@angular/material/chips';
 
 export interface Employee {
   id: number;
@@ -30,18 +19,7 @@ export interface Employee {
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,  
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatInputModule,
-    MatSelectModule,
-    MatMenuModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatDividerModule,
-    MatChipsModule
+    ReactiveFormsModule
   ],
   templateUrl: './employees.html',
   styleUrl: './employees.scss'
@@ -158,10 +136,10 @@ export class Employees implements OnInit {
 
   getStatusColor(status: string): string {
     switch (status) {
-      case 'active': return '#10b981';
-      case 'inactive': return '#ef4444';
-      case 'on-leave': return '#f59e0b';
-      default: return '#6b7280';
+      case 'active': return 'badge-success';
+      case 'inactive': return 'badge-error';
+      case 'on-leave': return 'badge-warning';
+      default: return 'badge-neutral';
     }
   }
 
@@ -176,12 +154,10 @@ export class Employees implements OnInit {
 
   editEmployee(employee: Employee): void {
     console.log('Modifica dipendente:', employee);
-    // Implementa la logica per modificare il dipendente
   }
 
   viewEmployee(employee: Employee): void {
     console.log('Visualizza dipendente:', employee);
-    // Implementa la logica per visualizzare il dipendente
   }
 
   deleteEmployee(employee: Employee): void {
@@ -193,23 +169,19 @@ export class Employees implements OnInit {
 
   addNewEmployee(): void {
     console.log('Aggiungi nuovo dipendente');
-    // Implementa la logica per aggiungere un nuovo dipendente
   }
 
   refreshEmployees(): void {
     console.log('Aggiorna lista dipendenti');
-    // Implementa la logica per aggiornare la lista
     this.applyFilters();
   }
 
   sendMessage(employee: Employee): void {
     console.log('Invia messaggio a:', employee);
-    // Implementa la logica per inviare un messaggio
   }
 
   viewProfile(employee: Employee): void {
     console.log('Visualizza profilo di:', employee);
-    // Implementa la logica per visualizzare il profilo
   }
 
   formatCurrency(value: number): string {

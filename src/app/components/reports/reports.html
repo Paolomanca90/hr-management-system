@@ -1,74 +1,84 @@
 <div class="space-y-6">
   <!-- Header -->
-  <div class="bg-white rounded-xl shadow-sm p-6">
-    <div class="flex items-center justify-between">
-      <div>
-        <h1 class="text-3xl font-bold text-gray-900">Report</h1>
-        <p class="text-gray-600 mt-1">Analisi e statistiche del personale</p>
-      </div>
-      <div class="flex items-center space-x-3">
-        <button 
-          mat-flat-button 
-          color="primary" 
-          class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700">
-          <mat-icon class="mr-2">download</mat-icon>
-          Esporta Report
-        </button>
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-3xl font-bold text-base-content">Report</h1>
+          <p class="text-base-content/70 mt-1">Analisi e statistiche del personale</p>
+        </div>
+        <div class="flex items-center space-x-3">
+          <button class="btn btn-primary">
+            <i class="fas fa-download mr-2"></i>
+            Esporta Report
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Cards dei report -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div class="bg-white rounded-xl shadow-sm p-6 text-center">
-      <div class="bg-blue-100 rounded-full p-4 mx-auto mb-4 w-16 h-16 flex items-center justify-center">
-        <mat-icon class="text-blue-600 text-2xl">people</mat-icon>
+    <div class="card bg-base-100 shadow-sm hover:shadow-lg transition-all duration-200">
+      <div class="card-body text-center">
+        <div class="bg-blue-100 dark:bg-blue-900/20 rounded-full p-4 mx-auto mb-4 w-16 h-16 flex items-center justify-center">
+          <i class="fas fa-users text-blue-600 text-2xl"></i>
+        </div>
+        <h3 class="text-lg font-semibold text-base-content mb-2">Report Dipendenti</h3>
+        <p class="text-base-content/70 text-sm mb-4">Statistiche complete sui dipendenti</p>
+        <button class="btn btn-outline btn-primary">
+          Genera Report
+        </button>
       </div>
-      <h3 class="text-lg font-semibold text-gray-900 mb-2">Report Dipendenti</h3>
-      <p class="text-gray-600 text-sm mb-4">Statistiche complete sui dipendenti</p>
-      <button mat-button class="text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg">
-        Genera Report
-      </button>
     </div>
 
-    <div class="bg-white rounded-xl shadow-sm p-6 text-center">
-      <div class="bg-green-100 rounded-full p-4 mx-auto mb-4 w-16 h-16 flex items-center justify-center">
-        <mat-icon class="text-green-600 text-2xl">event_available</mat-icon>
+    <div class="card bg-base-100 shadow-sm hover:shadow-lg transition-all duration-200">
+      <div class="card-body text-center">
+        <div class="bg-green-100 dark:bg-green-900/20 rounded-full p-4 mx-auto mb-4 w-16 h-16 flex items-center justify-center">
+          <i class="fas fa-calendar-check text-green-600 text-2xl"></i>
+        </div>
+        <h3 class="text-lg font-semibold text-base-content mb-2">Report Presenze</h3>
+        <p class="text-base-content/70 text-sm mb-4">Analisi delle presenze mensili</p>
+        <button class="btn btn-outline btn-success">
+          Genera Report
+        </button>
       </div>
-      <h3 class="text-lg font-semibold text-gray-900 mb-2">Report Presenze</h3>
-      <p class="text-gray-600 text-sm mb-4">Analisi delle presenze mensili</p>
-      <button mat-button class="text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg">
-        Genera Report
-      </button>
     </div>
 
-    <div class="bg-white rounded-xl shadow-sm p-6 text-center">
-      <div class="bg-yellow-100 rounded-full p-4 mx-auto mb-4 w-16 h-16 flex items-center justify-center">
-        <mat-icon class="text-yellow-600 text-2xl">account_balance_wallet</mat-icon>
+    <div class="card bg-base-100 shadow-sm hover:shadow-lg transition-all duration-200">
+      <div class="card-body text-center">
+        <div class="bg-yellow-100 dark:bg-yellow-900/20 rounded-full p-4 mx-auto mb-4 w-16 h-16 flex items-center justify-center">
+          <i class="fas fa-euro-sign text-yellow-600 text-2xl"></i>
+        </div>
+        <h3 class="text-lg font-semibold text-base-content mb-2">Report Stipendi</h3>
+        <p class="text-base-content/70 text-sm mb-4">Riepilogo costi del personale</p>
+        <button class="btn btn-outline btn-warning">
+          Genera Report
+        </button>
       </div>
-      <h3 class="text-lg font-semibold text-gray-900 mb-2">Report Stipendi</h3>
-      <p class="text-gray-600 text-sm mb-4">Riepilogo costi del personale</p>
-      <button mat-button class="text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg">
-        Genera Report
-      </button>
     </div>
   </div>
 
   <!-- Sezione in costruzione -->
-  <div class="bg-white rounded-xl shadow-sm p-12 text-center">
-    <div class="bg-gray-100 rounded-full p-6 mx-auto mb-4 w-24 h-24 flex items-center justify-center">
-      <mat-icon class="text-gray-400 text-4xl">assessment</mat-icon>
-    </div>
-    <h3 class="text-2xl font-bold text-gray-900 mb-2">Sezione in Sviluppo</h3>
-    <p class="text-gray-600 mb-6">I report dettagliati saranno disponibili nella prossima versione</p>
-    <div class="bg-blue-50 rounded-lg p-4 text-left max-w-md mx-auto">
-      <h4 class="font-semibold text-blue-900 mb-2">Prossime Funzionalità:</h4>
-      <ul class="text-blue-800 text-sm space-y-1">
-        <li>• Grafici interattivi con Chart.js</li>
-        <li>• Esportazione in PDF e Excel</li>
-        <li>• Report personalizzabili</li>
-        <li>• Analisi predittive</li>
-      </ul>
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body text-center py-12">
+      <div class="bg-base-200 rounded-full p-6 mx-auto mb-4 w-24 h-24 flex items-center justify-center">
+        <i class="fas fa-chart-bar text-base-content/40 text-4xl"></i>
+      </div>
+      <h3 class="text-2xl font-bold text-base-content mb-2">Sezione in Sviluppo</h3>
+      <p class="text-base-content/70 mb-6">I report dettagliati saranno disponibili nella prossima versione</p>
+      <div class="alert alert-info max-w-md mx-auto">
+        <i class="fas fa-info-circle"></i>
+        <div>
+          <h4 class="font-semibold mb-2">Prossime Funzionalità:</h4>
+          <ul class="text-sm space-y-1 text-left">
+            <li>• Grafici interattivi con Chart.js</li>
+            <li>• Esportazione in PDF e Excel</li>
+            <li>• Report personalizzabili</li>
+            <li>• Analisi predittive</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>
