@@ -1,70 +1,128 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="tw-h-screen tw-bg-gray-50">
   <!-- Sidebar -->
-  <mat-sidenav #sidenav [opened]="sidenavOpened" mode="side" class="sidenav">
-    <div class="sidenav-header">
-      <div class="logo">
-        <mat-icon>business</mat-icon>
-        <span *ngIf="sidenavOpened" class="logo-text">HR System</span>
-      </div>
-      <div *ngIf="currentUser && sidenavOpened" class="user-info">
-        <div class="user-avatar">
-          <mat-icon>account_circle</mat-icon>
+  <mat-sidenav 
+    #sidenav 
+    [opened]="sidenavOpened" 
+    mode="side" 
+    class="tw-w-64 tw-bg-gradient-to-b tw-from-slate-800 tw-to-slate-900 tw-shadow-2xl">
+    
+    <div class="tw-h-full tw-flex tw-flex-col">
+      <!-- Header della sidebar -->
+      <div class="tw-p-6 tw-border-b tw-border-slate-700">
+        <div class="tw-flex tw-items-center tw-mb-6">
+          <div class="tw-bg-indigo-600 tw-rounded-lg tw-p-2 tw-mr-3">
+            <mat-icon class="tw-text-white tw-text-2xl">business</mat-icon>
+          </div>
+          <div *ngIf="sidenavOpened" class="tw-text-white">
+            <h2 class="tw-text-lg tw-font-bold">HR System</h2>
+            <p class="tw-text-slate-300 tw-text-sm">Management</p>
+          </div>
         </div>
-        <div class="user-details">
-          <div class="user-name">{{ currentUser.username }}</div>
-          <div class="user-company">{{ currentUser.company }}</div>
+        
+        <!-- Info utente -->
+        <div *ngIf="currentUser && sidenavOpened" class="tw-bg-slate-700 tw-rounded-lg tw-p-4">
+          <div class="tw-flex tw-items-center">
+            <div class="tw-bg-indigo-500 tw-rounded-full tw-p-2 tw-mr-3">
+              <mat-icon class="tw-text-white tw-text-xl">account_circle</mat-icon>
+            </div>
+            <div class="tw-text-white tw-flex-1">
+              <div class="tw-font-medium tw-truncate">{{ currentUser.username }}</div>
+              <div class="tw-text-slate-300 tw-text-sm tw-truncate">{{ currentUser.company }}</div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <mat-nav-list class="nav-list">
-      <mat-list-item 
-        *ngFor="let item of menuItems" 
-        class="nav-item"
-        (click)="navigateTo(item.route)"
-        [class.active]="router.url === item.route">
-        <mat-icon matListIcon>{{ item.icon }}</mat-icon>
-        <span *ngIf="sidenavOpened" matLine>{{ item.label }}</span>
-      </mat-list-item>
-    </mat-nav-list>
+      <!-- Menu di navigazione -->
+      <nav class="tw-flex-1 tw-p-4">
+        <div class="tw-space-y-2">
+          <a 
+            *ngFor="let item of menuItems" 
+            [routerLink]="item.route"
+            routerLinkActive="tw-bg-indigo-600 tw-text-white tw-shadow-lg"
+            class="tw-flex tw-items-center tw-px-4 tw-py-3 tw-rounded-lg tw-text-slate-300 tw-transition-all tw-duration-200 hover:tw-bg-slate-700 hover:tw-text-white tw-group">
+            <mat-icon class="tw-mr-3 tw-text-xl group-hover:tw-scale-110 tw-transition-transform">{{ item.icon }}</mat-icon>
+            <span *ngIf="sidenavOpened" class="tw-font-medium">{{ item.label }}</span>
+          </a>
+        </div>
+      </nav>
 
-    <div class="sidenav-footer" *ngIf="sidenavOpened">
-      <button mat-button (click)="logout()" class="logout-btn">
-        <mat-icon>logout</mat-icon>
-        <span>Logout</span>
-      </button>
+      <!-- Footer della sidebar -->
+      <div class="tw-p-4 tw-border-t tw-border-slate-700" *ngIf="sidenavOpened">
+        <button 
+          mat-button 
+          (click)="logout()" 
+          class="tw-w-full tw-flex tw-items-center tw-justify-center tw-px-4 tw-py-3 tw-rounded-lg tw-text-slate-300 tw-transition-colors hover:tw-bg-red-600 hover:tw-text-white">
+          <mat-icon class="tw-mr-2">logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </div>
     </div>
   </mat-sidenav>
 
-  <!-- Main content area -->
-  <mat-sidenav-content class="main-content">
-    <!-- Top toolbar -->
-    <mat-toolbar class="toolbar">
-      <button mat-icon-button (click)="toggleSidenav()">
+  <!-- Contenuto principale -->
+  <mat-sidenav-content class="tw-flex tw-flex-col tw-min-h-screen">
+    <!-- Toolbar superiore -->
+    <mat-toolbar class="tw-bg-white tw-shadow-sm tw-border-b tw-border-gray-200">
+      <button 
+        mat-icon-button 
+        (click)="toggleSidenav()" 
+        class="tw-text-gray-600 hover:tw-text-gray-900 tw-transition-colors">
         <mat-icon>menu</mat-icon>
       </button>
       
-      <span class="toolbar-spacer"></span>
+      <span class="tw-flex-1"></span>
       
-      <button mat-icon-button [matMenuTriggerFor]="userMenu">
+      <!-- Notifiche -->
+      <button mat-icon-button class="tw-text-gray-600 hover:tw-text-gray-900 tw-mr-2">
+        <mat-icon [matBadge]="3" matBadgeColor="warn" matBadgeSize="small">notifications</mat-icon>
+      </button>
+      
+      <!-- Menu utente -->
+      <button 
+        mat-icon-button 
+        [matMenuTriggerFor]="userMenu"
+        class="tw-text-gray-600 hover:tw-text-gray-900">
         <mat-icon>account_circle</mat-icon>
       </button>
       
-      <mat-menu #userMenu="matMenu">
-        <button mat-menu-item disabled>
-          <mat-icon>person</mat-icon>
-          <span>{{ currentUser?.username }}</span>
+      <mat-menu #userMenu="matMenu" class="tw-mt-2">
+        <div class="tw-px-4 tw-py-3 tw-border-b tw-border-gray-200">
+          <div class="tw-flex tw-items-center">
+            <div class="tw-bg-indigo-600 tw-rounded-full tw-p-2 tw-mr-3">
+              <mat-icon class="tw-text-white tw-text-sm">person</mat-icon>
+            </div>
+            <div>
+              <div class="tw-font-medium tw-text-gray-900">{{ currentUser?.username }}</div>
+              <div class="tw-text-gray-500 tw-text-sm">{{ currentUser?.company }}</div>
+            </div>
+          </div>
+        </div>
+        
+        <button mat-menu-item class="tw-flex tw-items-center tw-py-3">
+          <mat-icon class="tw-mr-3 tw-text-gray-500">person</mat-icon>
+          <span>Profilo</span>
         </button>
+        
+        <button mat-menu-item class="tw-flex tw-items-center tw-py-3">
+          <mat-icon class="tw-mr-3 tw-text-gray-500">settings</mat-icon>
+          <span>Impostazioni</span>
+        </button>
+        
         <mat-divider></mat-divider>
-        <button mat-menu-item (click)="logout()">
-          <mat-icon>logout</mat-icon>
+        
+        <button 
+          mat-menu-item 
+          (click)="logout()" 
+          class="tw-flex tw-items-center tw-py-3 tw-text-red-600 hover:tw-bg-red-50">
+          <mat-icon class="tw-mr-3">logout</mat-icon>
           <span>Logout</span>
         </button>
       </mat-menu>
     </mat-toolbar>
 
-    <!-- Router outlet per il contenuto dinamico -->
-    <div class="content-area">
+    <!-- Area del contenuto -->
+    <div class="tw-flex-1 tw-p-6 tw-bg-gray-50">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

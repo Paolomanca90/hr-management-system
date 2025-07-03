@@ -20,6 +20,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^20.0.6",
     "@angular/cdk": "^20.0.5",
     "@angular/common": "^20.0.0",
     "@angular/compiler": "^20.0.0",
@@ -49,7 +50,9 @@
     "typescript": "~5.8.2"
   },
   "tailwindcss": {
-    "content": ["./src/**/*.{html,ts}"],
+    "content": [
+      "./src/**/*.{html,ts}"
+    ],
     "prefix": "tw-"
   }
 }

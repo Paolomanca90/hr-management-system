@@ -1,93 +1,204 @@
-<div class="dashboard-container">
-  <div class="dashboard-header">
-    <h1>Dashboard</h1>
-    <p>Panoramica generale del sistema HR</p>
+<div class="tw-space-y-6">
+  <!-- Header della dashboard -->
+  <div class="tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-6">
+    <div class="tw-flex tw-items-center tw-justify-between">
+      <div>
+        <h1 class="tw-text-3xl tw-font-bold tw-text-gray-900">Dashboard</h1>
+        <p class="tw-text-gray-600 tw-mt-1">Panoramica generale del sistema HR</p>
+      </div>
+      <div class="tw-flex tw-items-center tw-space-x-3">
+        <div class="tw-bg-indigo-50 tw-rounded-lg tw-p-3">
+          <mat-icon class="tw-text-indigo-600 tw-text-2xl">dashboard</mat-icon>
+        </div>
+        <div class="tw-text-sm tw-text-gray-500">
+          <div>Ultimo aggiornamento</div>
+          <div class="tw-font-medium">{{ getCurrentDateTime() }}</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Cards statistiche -->
-  <div class="stats-grid">
-    <mat-card *ngFor="let card of dashboardCards" class="stats-card">
-      <mat-card-content>
-        <div class="stats-content">
-          <div class="stats-icon" [style.background-color]="card.color">
-            <mat-icon>{{ card.icon }}</mat-icon>
-          </div>
-          <div class="stats-info">
-            <h3 class="stats-title">{{ card.title }}</h3>
-            <div class="stats-value">
-              <span *ngIf="card.title.includes('Budget')">{{ formatCurrency(card.value) }}</span>
-              <span *ngIf="!card.title.includes('Budget')">{{ card.value }}</span>
+  <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4 tw-gap-6">
+    <div 
+      *ngFor="let card of dashboardCards; let i = index" 
+      class="tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-6 tw-transition-all tw-duration-200 hover:tw-shadow-lg hover:tw-scale-105">
+      <div class="tw-flex tw-items-center tw-justify-between">
+        <div class="tw-flex-1">
+          <div class="tw-flex tw-items-center tw-mb-3">
+            <div 
+              class="tw-rounded-lg tw-p-3 tw-mr-4"
+              [style.background-color]="card.color + '20'"
+              [style.border]="'1px solid ' + card.color + '40'">
+              <mat-icon [style.color]="card.color" class="tw-text-2xl">{{ card.icon }}</mat-icon>
             </div>
-            <p class="stats-subtitle" *ngIf="card.subtitle">{{ card.subtitle }}</p>
+            <div class="tw-text-sm tw-text-gray-500 tw-font-medium tw-uppercase tw-tracking-wide">
+              {{ card.title }}
+            </div>
+          </div>
+          <div class="tw-text-2xl tw-font-bold tw-text-gray-900 tw-mb-2">
+            <span *ngIf="card.title.includes('Budget')">{{ formatCurrency(card.value) }}</span>
+            <span *ngIf="!card.title.includes('Budget')">{{ card.value }}</span>
+          </div>
+          <div class="tw-flex tw-items-center tw-text-sm" *ngIf="card.subtitle">
+            <mat-icon class="tw-text-green-500 tw-text-sm tw-mr-1">trending_up</mat-icon>
+            <span class="tw-text-gray-600">{{ card.subtitle }}</span>
           </div>
         </div>
-      </mat-card-content>
-    </mat-card>
+      </div>
+    </div>
   </div>
 
-  <!-- Sezione principale con grafici e attività -->
-  <div class="dashboard-content">
-    <div class="left-section">
-      <mat-card class="chart-card">
-        <mat-card-header>
-          <mat-card-title>Andamento Presenze</mat-card-title>
-          <mat-card-subtitle>Ultimi 7 giorni</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="chart-placeholder">
-            <mat-icon>bar_chart</mat-icon>
-            <p>Grafico presenze</p>
-            <small>Integra qui la tua libreria di grafici preferita</small>
+  <!-- Contenuto principale -->
+  <div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-3 tw-gap-6">
+    <!-- Sezione sinistra - Grafici -->
+    <div class="lg:tw-col-span-2 tw-space-y-6">
+      <!-- Grafico presenze -->
+      <div class="tw-bg-white tw-rounded-xl tw-shadow-sm">
+        <div class="tw-p-6 tw-border-b tw-border-gray-200">
+          <div class="tw-flex tw-items-center tw-justify-between">
+            <div>
+              <h3 class="tw-text-lg tw-font-semibold tw-text-gray-900">Andamento Presenze</h3>
+              <p class="tw-text-gray-500 tw-text-sm">Ultimi 7 giorni</p>
+            </div>
+            <div class="tw-flex tw-items-center tw-space-x-2">
+              <button mat-icon-button class="tw-text-gray-400 hover:tw-text-gray-600">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </div>
           </div>
-        </mat-card-content>
-      </mat-card>
+        </div>
+        <div class="tw-p-6">
+          <div class="tw-flex tw-items-center tw-justify-center tw-h-64 tw-bg-gray-50 tw-rounded-lg">
+            <div class="tw-text-center">
+              <div class="tw-bg-indigo-100 tw-rounded-full tw-p-4 tw-mx-auto tw-mb-4 tw-w-16 tw-h-16 tw-flex tw-items-center tw-justify-center">
+                <mat-icon class="tw-text-indigo-600 tw-text-2xl">bar_chart</mat-icon>
+              </div>
+              <h4 class="tw-text-lg tw-font-medium tw-text-gray-900 tw-mb-2">Grafico Presenze</h4>
+              <p class="tw-text-gray-500 tw-text-sm">Integra qui la tua libreria di grafici preferita</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistiche aggiuntive -->
+      <div class="tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-6">
+        <h3 class="tw-text-lg tw-font-semibold tw-text-gray-900 tw-mb-4">Statistiche Mensili</h3>
+        <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-gap-4">
+          <div class="tw-text-center tw-p-4 tw-bg-blue-50 tw-rounded-lg">
+            <div class="tw-text-2xl tw-font-bold tw-text-blue-600">95%</div>
+            <div class="tw-text-sm tw-text-gray-600">Presenza Media</div>
+          </div>
+          <div class="tw-text-center tw-p-4 tw-bg-green-50 tw-rounded-lg">
+            <div class="tw-text-2xl tw-font-bold tw-text-green-600">18</div>
+            <div class="tw-text-sm tw-text-gray-600">Giorni Lavorati</div>
+          </div>
+          <div class="tw-text-center tw-p-4 tw-bg-yellow-50 tw-rounded-lg">
+            <div class="tw-text-2xl tw-font-bold tw-text-yellow-600">12</div>
+            <div class="tw-text-sm tw-text-gray-600">Ore Straordinari</div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="right-section">
-      <mat-card class="activity-card">
-        <mat-card-header>
-          <mat-card-title>Attività Recenti</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="activity-list">
-            <div *ngFor="let activity of recentActivities" class="activity-item">
-              <div class="activity-icon">
-                <mat-icon>notifications</mat-icon>
+    <!-- Sezione destra -->
+    <div class="tw-space-y-6">
+      <!-- Attività recenti -->
+      <div class="tw-bg-white tw-rounded-xl tw-shadow-sm">
+        <div class="tw-p-6 tw-border-b tw-border-gray-200">
+          <h3 class="tw-text-lg tw-font-semibold tw-text-gray-900">Attività Recenti</h3>
+        </div>
+        <div class="tw-p-6">
+          <div class="tw-space-y-4">
+            <div *ngFor="let activity of recentActivities" class="tw-flex tw-items-start tw-space-x-3">
+              <div class="tw-bg-indigo-100 tw-rounded-full tw-p-2 tw-flex-shrink-0">
+                <mat-icon class="tw-text-indigo-600 tw-text-sm">notifications</mat-icon>
               </div>
-              <div class="activity-details">
-                <div class="activity-action">{{ activity.action }}</div>
-                <div class="activity-user">{{ activity.user }}</div>
-                <div class="activity-time">{{ activity.time }}</div>
+              <div class="tw-flex-1 tw-min-w-0">
+                <div class="tw-text-sm tw-font-medium tw-text-gray-900">{{ activity.action }}</div>
+                <div class="tw-text-sm tw-text-gray-500">{{ activity.user }}</div>
+                <div class="tw-text-xs tw-text-gray-400">{{ activity.time }}</div>
               </div>
             </div>
           </div>
-          <button mat-button color="primary" class="view-all-btn">
-            Vedi tutte le attività
-          </button>
-        </mat-card-content>
-      </mat-card>
+          <div class="tw-mt-6">
+            <button mat-stroked-button class="tw-w-full tw-border-indigo-200 tw-text-indigo-600 hover:tw-bg-indigo-50">
+              Vedi tutte le attività
+            </button>
+          </div>
+        </div>
+      </div>
 
-      <mat-card class="quick-actions-card">
-        <mat-card-header>
-          <mat-card-title>Azioni Rapide</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="quick-actions">
-            <button mat-raised-button color="primary" class="action-btn">
-              <mat-icon>person_add</mat-icon>
+      <!-- Azioni rapide -->
+      <div class="tw-bg-white tw-rounded-xl tw-shadow-sm">
+        <div class="tw-p-6 tw-border-b tw-border-gray-200">
+          <h3 class="tw-text-lg tw-font-semibold tw-text-gray-900">Azioni Rapide</h3>
+        </div>
+        <div class="tw-p-6">
+          <div class="tw-space-y-3">
+            <button 
+              mat-flat-button 
+              color="primary" 
+              class="tw-w-full tw-bg-indigo-600 tw-text-white tw-py-3 tw-rounded-lg hover:tw-bg-indigo-700 tw-transition-colors">
+              <mat-icon class="tw-mr-2">person_add</mat-icon>
               Nuovo Dipendente
             </button>
-            <button mat-raised-button color="accent" class="action-btn">
-              <mat-icon>event</mat-icon>
+            <button 
+              mat-flat-button 
+              class="tw-w-full tw-bg-emerald-600 tw-text-white tw-py-3 tw-rounded-lg hover:tw-bg-emerald-700 tw-transition-colors">
+              <mat-icon class="tw-mr-2">event</mat-icon>
               Gestisci Ferie
             </button>
-            <button mat-raised-button class="action-btn">
-              <mat-icon>description</mat-icon>
+            <button 
+              mat-flat-button 
+              class="tw-w-full tw-bg-slate-600 tw-text-white tw-py-3 tw-rounded-lg hover:tw-bg-slate-700 tw-transition-colors">
+              <mat-icon class="tw-mr-2">description</mat-icon>
               Genera Report
             </button>
           </div>
-        </mat-card-content>
-      </mat-card>
+        </div>
+      </div>
+
+      <!-- Task in scadenza -->
+      <div class="tw-bg-white tw-rounded-xl tw-shadow-sm">
+        <div class="tw-p-6 tw-border-b tw-border-gray-200">
+          <h3 class="tw-text-lg tw-font-semibold tw-text-gray-900">Task in Scadenza</h3>
+        </div>
+        <div class="tw-p-6">
+          <div class="tw-space-y-3">
+            <div class="tw-flex tw-items-center tw-justify-between tw-p-3 tw-bg-orange-50 tw-rounded-lg">
+              <div class="tw-flex tw-items-center">
+                <div class="tw-w-3 tw-h-3 tw-bg-orange-500 tw-rounded-full tw-mr-3"></div>
+                <div>
+                  <div class="tw-text-sm tw-font-medium tw-text-gray-900">Valutazioni Performance</div>
+                  <div class="tw-text-xs tw-text-gray-500">Scadenza: 2 giorni</div>
+                </div>
+              </div>
+              <mat-icon class="tw-text-orange-500 tw-text-sm">schedule</mat-icon>
+            </div>
+            <div class="tw-flex tw-items-center tw-justify-between tw-p-3 tw-bg-red-50 tw-rounded-lg">
+              <div class="tw-flex tw-items-center">
+                <div class="tw-w-3 tw-h-3 tw-bg-red-500 tw-rounded-full tw-mr-3"></div>
+                <div>
+                  <div class="tw-text-sm tw-font-medium tw-text-gray-900">Contratti in Scadenza</div>
+                  <div class="tw-text-xs tw-text-gray-500">Scadenza: domani</div>
+                </div>
+              </div>
+              <mat-icon class="tw-text-red-500 tw-text-sm">warning</mat-icon>
+            </div>
+            <div class="tw-flex tw-items-center tw-justify-between tw-p-3 tw-bg-blue-50 tw-rounded-lg">
+              <div class="tw-flex tw-items-center">
+                <div class="tw-w-3 tw-h-3 tw-bg-blue-500 tw-rounded-full tw-mr-3"></div>
+                <div>
+                  <div class="tw-text-sm tw-font-medium tw-text-gray-900">Revisione Buste Paga</div>
+                  <div class="tw-text-xs tw-text-gray-500">Scadenza: 1 settimana</div>
+                </div>
+              </div>
+              <mat-icon class="tw-text-blue-500 tw-text-sm">event</mat-icon>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -1,44 +1,72 @@
-<div class="login-container">
-  <div class="login-card">
-    <div class="login-header">
-      <h1>HR Management System</h1>
-      <p>Accedi al tuo account</p>
+<div class="tw-min-h-screen tw-bg-gradient-to-br tw-from-blue-50 tw-to-indigo-100 tw-flex tw-items-center tw-justify-center tw-p-4">
+  <div class="tw-w-full tw-max-w-md tw-bg-white tw-rounded-2xl tw-shadow-2xl tw-p-8">
+    <div class="tw-text-center tw-mb-8">
+      <div class="tw-flex tw-justify-center tw-mb-4">
+        <div class="tw-bg-indigo-600 tw-rounded-full tw-p-3">
+          <mat-icon class="tw-text-white tw-text-3xl">business</mat-icon>
+        </div>
+      </div>
+      <h1 class="tw-text-2xl tw-font-bold tw-text-gray-900 tw-mb-2">HR Management System</h1>
+      <p class="tw-text-gray-600">Accedi al tuo account aziendale</p>
     </div>
     
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Username</mat-label>
-        <input matInput formControlName="username" placeholder="Inserisci username">
-        <mat-error *ngIf="submitted && f['username'].errors?.['required']">
-          Username richiesto
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Password</mat-label>
-        <input matInput type="password" formControlName="password" placeholder="Inserisci password">
-        <mat-error *ngIf="submitted && f['password'].errors?.['required']">
-          Password richiesta
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Dominio</mat-label>
-        <input matInput formControlName="domain" placeholder="Inserisci dominio azienda">
-        <mat-error *ngIf="submitted && f['domain'].errors?.['required']">
-          Dominio richiesto
-        </mat-error>
-      </mat-form-field>
-
-      <div class="error-message" *ngIf="error">
-        {{ error }}
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="tw-space-y-6">
+      <div>
+        <mat-form-field appearance="outline" class="tw-w-full">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" placeholder="Inserisci username" class="tw-w-full">
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="submitted && f['username'].errors?.['required']">
+            Username richiesto
+          </mat-error>
+        </mat-form-field>
       </div>
 
-      <button mat-raised-button color="primary" type="submit" 
-              [disabled]="loading" class="login-button">
-        <span *ngIf="loading">Accesso in corso...</span>
+      <div>
+        <mat-form-field appearance="outline" class="tw-w-full">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" placeholder="Inserisci password" class="tw-w-full">
+          <mat-icon matSuffix>lock</mat-icon>
+          <mat-error *ngIf="submitted && f['password'].errors?.['required']">
+            Password richiesta
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="outline" class="tw-w-full">
+          <mat-label>Dominio</mat-label>
+          <input matInput formControlName="domain" placeholder="Inserisci dominio azienda" class="tw-w-full">
+          <mat-icon matSuffix>domain</mat-icon>
+          <mat-error *ngIf="submitted && f['domain'].errors?.['required']">
+            Dominio richiesto
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="tw-bg-red-50 tw-border tw-border-red-200 tw-rounded-lg tw-p-4" *ngIf="error">
+        <div class="tw-flex tw-items-center">
+          <mat-icon class="tw-text-red-500 tw-mr-2">error</mat-icon>
+          <span class="tw-text-red-700 tw-text-sm">{{ error }}</span>
+        </div>
+      </div>
+
+      <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit" 
+        [disabled]="loading" 
+        class="tw-w-full tw-py-3 tw-bg-indigo-600 tw-text-white tw-rounded-lg tw-font-medium tw-transition-colors hover:tw-bg-indigo-700 disabled:tw-bg-gray-300">
+        <span *ngIf="loading" class="tw-flex tw-items-center tw-justify-center">
+          <mat-icon class="tw-animate-spin tw-mr-2">autorenew</mat-icon>
+          Accesso in corso...
+        </span>
         <span *ngIf="!loading">Accedi</span>
       </button>
     </form>
+
+    <div class="tw-mt-6 tw-text-center tw-text-sm tw-text-gray-500">
+      <p>Sistema di gestione delle risorse umane</p>
+    </div>
   </div>
 </div>

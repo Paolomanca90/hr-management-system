@@ -1,119 +1,223 @@
-<!-- components/employees/employees.component.html -->
-<div class="employees-container">
-  <div class="employees-header">
-    <div class="header-left">
-      <h1>Gestione Dipendenti</h1>
-      <p>Visualizza e gestisci tutti i dipendenti dell'azienda</p>
-    </div>
-    <div class="header-right">
-      <button mat-raised-button color="primary" (click)="addNewEmployee()">
-        <mat-icon>person_add</mat-icon>
-        Nuovo Dipendente
-      </button>
+<div class="tw-space-y-6">
+  <!-- Header -->
+  <div class="tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-6">
+    <div class="tw-flex tw-flex-col md:tw-flex-row tw-items-start md:tw-items-center tw-justify-between tw-gap-4">
+      <div>
+        <h1 class="tw-text-3xl tw-font-bold tw-text-gray-900">Gestione Dipendenti</h1>
+        <p class="tw-text-gray-600 tw-mt-1">Visualizza e gestisci tutti i dipendenti dell'azienda</p>
+      </div>
+      <div class="tw-flex tw-items-center tw-space-x-3">
+        <button 
+          mat-flat-button 
+          color="primary" 
+          (click)="addNewEmployee()"
+          class="tw-bg-indigo-600 tw-text-white tw-px-6 tw-py-2 tw-rounded-lg hover:tw-bg-indigo-700 tw-transition-colors">
+          <mat-icon class="tw-mr-2">person_add</mat-icon>
+          Nuovo Dipendente
+        </button>
+        <button 
+          mat-icon-button 
+          class="tw-text-gray-400 hover:tw-text-gray-600"
+          (click)="refreshEmployees()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
 
   <!-- Filtri -->
-  <mat-card class="filters-card">
-    <mat-card-content>
-      <div class="filters-row">
-        <mat-form-field appearance="outline" class="search-field">
+  <div class="tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-6">
+    <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-4 tw-gap-4 tw-items-end">
+      <div class="md:tw-col-span-2">
+        <mat-form-field appearance="outline" class="tw-w-full">
           <mat-label>Cerca dipendente</mat-label>
-          <input matInput 
-                 [(ngModel)]="searchTerm" 
-                 (input)="applyFilters()" 
-                 placeholder="Nome, cognome o email">
-          <mat-icon matSuffix>search</mat-icon>
+          <input 
+            matInput 
+            [(ngModel)]="searchTerm" 
+            (input)="applyFilters()" 
+            placeholder="Nome, cognome o email">
+          <mat-icon matSuffix class="tw-text-gray-400">search</mat-icon>
         </mat-form-field>
+      </div>
 
-        <mat-form-field appearance="outline" class="filter-field">
+      <div>
+        <mat-form-field appearance="outline" class="tw-w-full">
           <mat-label>Dipartimento</mat-label>
           <mat-select [(value)]="selectedDepartment" (selectionChange)="applyFilters()">
-            <mat-option value="">Tutti</mat-option>
+            <mat-option value="">Tutti i dipartimenti</mat-option>
             <mat-option *ngFor="let dept of departments" [value]="dept">
               {{ dept }}
             </mat-option>
           </mat-select>
         </mat-form-field>
+      </div>
 
-        <mat-form-field appearance="outline" class="filter-field">
+      <div>
+        <mat-form-field appearance="outline" class="tw-w-full">
           <mat-label>Stato</mat-label>
           <mat-select [(value)]="selectedStatus" (selectionChange)="applyFilters()">
-            <mat-option value="">Tutti</mat-option>
+            <mat-option value="">Tutti gli stati</mat-option>
             <mat-option value="active">Attivo</mat-option>
             <mat-option value="inactive">Inattivo</mat-option>
             <mat-option value="on-leave">In Ferie</mat-option>
           </mat-select>
         </mat-form-field>
-
-        <button mat-button (click)="clearFilters()" class="clear-filters-btn">
-          <mat-icon>clear</mat-icon>
-          Pulisci Filtri
-        </button>
       </div>
-    </mat-card-content>
-  </mat-card>
+    </div>
+    
+    <div class="tw-flex tw-items-center tw-justify-between tw-mt-4">
+      <div class="tw-text-sm tw-text-gray-500">
+        Trovati {{ filteredEmployees.length }} dipendenti su {{ employees.length }}
+      </div>
+      <button 
+        mat-button 
+        (click)="clearFilters()" 
+        class="tw-text-indigo-600 hover:tw-bg-indigo-50 tw-px-4 tw-py-2 tw-rounded-lg">
+        <mat-icon class="tw-mr-1">clear</mat-icon>
+        Pulisci Filtri
+      </button>
+    </div>
+  </div>
 
   <!-- Lista dipendenti -->
-  <div class="employees-grid">
-    <mat-card *ngFor="let employee of filteredEmployees" class="employee-card">
-      <mat-card-content>
-        <div class="employee-header">
-          <div class="employee-avatar">
-            <mat-icon>account_circle</mat-icon>
+  <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-6">
+    <div 
+      *ngFor="let employee of filteredEmployees" 
+      class="tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-6 tw-transition-all tw-duration-200 hover:tw-shadow-lg hover:tw-scale-105">
+      
+      <!-- Header della card -->
+      <div class="tw-flex tw-items-start tw-justify-between tw-mb-4">
+        <div class="tw-flex tw-items-center tw-space-x-3">
+          <div class="tw-bg-indigo-100 tw-rounded-full tw-p-3">
+            <mat-icon class="tw-text-indigo-600 tw-text-2xl">account_circle</mat-icon>
           </div>
-          <div class="employee-info">
-            <h3 class="employee-name">{{ employee.firstName }} {{ employee.lastName }}</h3>
-            <p class="employee-position">{{ employee.position }}</p>
-            <div class="employee-status">
-              <span class="status-badge" [style.background-color]="getStatusColor(employee.status)">
-                {{ getStatusText(employee.status) }}
-              </span>
-            </div>
+          <div>
+            <h3 class="tw-text-lg tw-font-semibold tw-text-gray-900">
+              {{ employee.firstName }} {{ employee.lastName }}
+            </h3>
+            <p class="tw-text-gray-600 tw-text-sm">{{ employee.position }}</p>
           </div>
-          <div class="employee-actions">
-            <button mat-icon-button [matMenuTriggerFor]="menu">
-              <mat-icon>more_vert</mat-icon>
+        </div>
+        
+        <div class="tw-flex tw-items-center tw-space-x-2">
+          <span 
+            class="tw-inline-flex tw-items-center tw-px-2 tw-py-1 tw-rounded-full tw-text-xs tw-font-medium"
+            [class.tw-bg-green-100]="employee.status === 'active'"
+            [class.tw-text-green-800]="employee.status === 'active'"
+            [class.tw-bg-red-100]="employee.status === 'inactive'"
+            [class.tw-text-red-800]="employee.status === 'inactive'"
+            [class.tw-bg-yellow-100]="employee.status === 'on-leave'"
+            [class.tw-text-yellow-800]="employee.status === 'on-leave'">
+            {{ getStatusText(employee.status) }}
+          </span>
+          
+          <button 
+            mat-icon-button 
+            [matMenuTriggerFor]="menu"
+            class="tw-text-gray-400 hover:tw-text-gray-600">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="editEmployee(employee)">
+              <mat-icon class="tw-mr-2">edit</mat-icon>
+              <span>Modifica</span>
             </button>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="editEmployee(employee)">
-                <mat-icon>edit</mat-icon>
-                <span>Modifica</span>
-              </button>
-              <button mat-menu-item (click)="deleteEmployee(employee)">
-                <mat-icon>delete</mat-icon>
-                <span>Elimina</span>
-              </button>
-            </mat-menu>
-          </div>
+            <button mat-menu-item (click)="viewEmployee(employee)">
+              <mat-icon class="tw-mr-2">visibility</mat-icon>
+              <span>Visualizza</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="deleteEmployee(employee)" class="tw-text-red-600">
+              <mat-icon class="tw-mr-2">delete</mat-icon>
+              <span>Elimina</span>
+            </button>
+          </mat-menu>
         </div>
+      </div>
 
-        <div class="employee-details">
-          <div class="detail-item">
-            <mat-icon>email</mat-icon>
-            <span>{{ employee.email }}</span>
-          </div>
-          <div class="detail-item">
-            <mat-icon>business</mat-icon>
-            <span>{{ employee.department }}</span>
-          </div>
-          <div class="detail-item">
-            <mat-icon>calendar_today</mat-icon>
-            <span>Assunto il {{ employee.hireDate | date:'dd/MM/yyyy' }}</span>
-          </div>
-          <div class="detail-item">
-            <mat-icon>euro</mat-icon>
-            <span>{{ formatCurrency(employee.salary) }}</span>
-          </div>
+      <!-- Dettagli dipendente -->
+      <div class="tw-space-y-3">
+        <div class="tw-flex tw-items-center tw-space-x-3 tw-text-sm tw-text-gray-600">
+          <mat-icon class="tw-text-gray-400 tw-text-lg">email</mat-icon>
+          <span class="tw-truncate">{{ employee.email }}</span>
         </div>
-      </mat-card-content>
-    </mat-card>
+        
+        <div class="tw-flex tw-items-center tw-space-x-3 tw-text-sm tw-text-gray-600">
+          <mat-icon class="tw-text-gray-400 tw-text-lg">business</mat-icon>
+          <span>{{ employee.department }}</span>
+        </div>
+        
+        <div class="tw-flex tw-items-center tw-space-x-3 tw-text-sm tw-text-gray-600">
+          <mat-icon class="tw-text-gray-400 tw-text-lg">calendar_today</mat-icon>
+          <span>Assunto il {{ employee.hireDate | date:'dd/MM/yyyy' }}</span>
+        </div>
+        
+        <div class="tw-flex tw-items-center tw-space-x-3 tw-text-sm tw-text-gray-600">
+          <mat-icon class="tw-text-gray-400 tw-text-lg">euro</mat-icon>
+          <span class="tw-font-medium">{{ formatCurrency(employee.salary) }}</span>
+        </div>
+      </div>
+
+      <!-- Footer della card -->
+      <div class="tw-flex tw-items-center tw-justify-between tw-mt-6 tw-pt-4 tw-border-t tw-border-gray-200">
+        <div class="tw-text-xs tw-text-gray-500">
+          ID: {{ employee.id }}
+        </div>
+        <div class="tw-flex tw-space-x-2">
+          <button 
+            mat-icon-button 
+            size="small" 
+            class="tw-text-gray-400 hover:tw-text-indigo-600"
+            (click)="sendMessage(employee)">
+            <mat-icon class="tw-text-sm">message</mat-icon>
+          </button>
+          <button 
+            mat-icon-button 
+            size="small" 
+            class="tw-text-gray-400 hover:tw-text-indigo-600"
+            (click)="viewProfile(employee)">
+            <mat-icon class="tw-text-sm">person</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Messaggio quando non ci sono risultati -->
-  <div *ngIf="filteredEmployees.length === 0" class="no-results">
-    <mat-icon>people_outline</mat-icon>
-    <h3>Nessun dipendente trovato</h3>
-    <p>Modifica i filtri di ricerca o aggiungi un nuovo dipendente</p>
+  <div 
+    *ngIf="filteredEmployees.length === 0" 
+    class="tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-12 tw-text-center">
+    <div class="tw-bg-gray-100 tw-rounded-full tw-p-6 tw-mx-auto tw-mb-4 tw-w-24 tw-h-24 tw-flex tw-items-center tw-justify-center">
+      <mat-icon class="tw-text-gray-400 tw-text-4xl">people_outline</mat-icon>
+    </div>
+    <h3 class="tw-text-lg tw-font-semibold tw-text-gray-900 tw-mb-2">Nessun dipendente trovato</h3>
+    <p class="tw-text-gray-600 tw-mb-6">Modifica i filtri di ricerca o aggiungi un nuovo dipendente</p>
+    <button 
+      mat-flat-button 
+      color="primary" 
+      (click)="addNewEmployee()"
+      class="tw-bg-indigo-600 tw-text-white tw-px-6 tw-py-2 tw-rounded-lg hover:tw-bg-indigo-700">
+      <mat-icon class="tw-mr-2">person_add</mat-icon>
+      Aggiungi Dipendente
+    </button>
+  </div>
+
+  <!-- Paginazione -->
+  <div class="tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-4" *ngIf="filteredEmployees.length > 0">
+    <div class="tw-flex tw-items-center tw-justify-between">
+      <div class="tw-text-sm tw-text-gray-500">
+        Visualizzando {{ filteredEmployees.length }} risultati
+      </div>
+      <div class="tw-flex tw-items-center tw-space-x-2">
+        <button mat-icon-button class="tw-text-gray-400" disabled>
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <span class="tw-text-sm tw-text-gray-600">Pagina 1 di 1</span>
+        <button mat-icon-button class="tw-text-gray-400" disabled>
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    </div>
   </div>
 </div>

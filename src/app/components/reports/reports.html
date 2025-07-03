@@ -1,1 +1,74 @@
-<p>reports works!</p>
+<div class="tw-space-y-6">
+  <!-- Header -->
+  <div class="tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-6">
+    <div class="tw-flex tw-items-center tw-justify-between">
+      <div>
+        <h1 class="tw-text-3xl tw-font-bold tw-text-gray-900">Report</h1>
+        <p class="tw-text-gray-600 tw-mt-1">Analisi e statistiche del personale</p>
+      </div>
+      <div class="tw-flex tw-items-center tw-space-x-3">
+        <button 
+          mat-flat-button 
+          color="primary" 
+          class="tw-bg-indigo-600 tw-text-white tw-px-6 tw-py-2 tw-rounded-lg hover:tw-bg-indigo-700">
+          <mat-icon class="tw-mr-2">download</mat-icon>
+          Esporta Report
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cards dei report -->
+  <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-6">
+    <div class="tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-6 tw-text-center">
+      <div class="tw-bg-blue-100 tw-rounded-full tw-p-4 tw-mx-auto tw-mb-4 tw-w-16 tw-h-16 tw-flex tw-items-center tw-justify-center">
+        <mat-icon class="tw-text-blue-600 tw-text-2xl">people</mat-icon>
+      </div>
+      <h3 class="tw-text-lg tw-font-semibold tw-text-gray-900 tw-mb-2">Report Dipendenti</h3>
+      <p class="tw-text-gray-600 tw-text-sm tw-mb-4">Statistiche complete sui dipendenti</p>
+      <button mat-button class="tw-text-indigo-600 hover:tw-bg-indigo-50 tw-px-4 tw-py-2 tw-rounded-lg">
+        Genera Report
+      </button>
+    </div>
+
+    <div class="tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-6 tw-text-center">
+      <div class="tw-bg-green-100 tw-rounded-full tw-p-4 tw-mx-auto tw-mb-4 tw-w-16 tw-h-16 tw-flex tw-items-center tw-justify-center">
+        <mat-icon class="tw-text-green-600 tw-text-2xl">event_available</mat-icon>
+      </div>
+      <h3 class="tw-text-lg tw-font-semibold tw-text-gray-900 tw-mb-2">Report Presenze</h3>
+      <p class="tw-text-gray-600 tw-text-sm tw-mb-4">Analisi delle presenze mensili</p>
+      <button mat-button class="tw-text-indigo-600 hover:tw-bg-indigo-50 tw-px-4 tw-py-2 tw-rounded-lg">
+        Genera Report
+      </button>
+    </div>
+
+    <div class="tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-6 tw-text-center">
+      <div class="tw-bg-yellow-100 tw-rounded-full tw-p-4 tw-mx-auto tw-mb-4 tw-w-16 tw-h-16 tw-flex tw-items-center tw-justify-center">
+        <mat-icon class="tw-text-yellow-600 tw-text-2xl">account_balance_wallet</mat-icon>
+      </div>
+      <h3 class="tw-text-lg tw-font-semibold tw-text-gray-900 tw-mb-2">Report Stipendi</h3>
+      <p class="tw-text-gray-600 tw-text-sm tw-mb-4">Riepilogo costi del personale</p>
+      <button mat-button class="tw-text-indigo-600 hover:tw-bg-indigo-50 tw-px-4 tw-py-2 tw-rounded-lg">
+        Genera Report
+      </button>
+    </div>
+  </div>
+
+  <!-- Sezione in costruzione -->
+  <div class="tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-12 tw-text-center">
+    <div class="tw-bg-gray-100 tw-rounded-full tw-p-6 tw-mx-auto tw-mb-4 tw-w-24 tw-h-24 tw-flex tw-items-center tw-justify-center">
+      <mat-icon class="tw-text-gray-400 tw-text-4xl">assessment</mat-icon>
+    </div>
+    <h3 class="tw-text-2xl tw-font-bold tw-text-gray-900 tw-mb-2">Sezione in Sviluppo</h3>
+    <p class="tw-text-gray-600 tw-mb-6">I report dettagliati saranno disponibili nella prossima versione</p>
+    <div class="tw-bg-blue-50 tw-rounded-lg tw-p-4 tw-text-left tw-max-w-md tw-mx-auto">
+      <h4 class="tw-font-semibold tw-text-blue-900 tw-mb-2">Prossime Funzionalità:</h4>
+      <ul class="tw-text-blue-800 tw-text-sm tw-space-y-1">
+        <li>• Grafici interattivi con Chart.js</li>
+        <li>• Esportazione in PDF e Excel</li>
+        <li>• Report personalizzabili</li>
+        <li>• Analisi predittive</li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,244 @@
+// Employees component styles
+.employees-container {
+  .employees-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .employee-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      
+      .employee-avatar {
+        transform: scale(1.05);
+      }
+    }
+    
+    .employee-avatar {
+      transition: transform 0.3s ease;
+      
+      mat-icon {
+        font-size: 2.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+    }
+    
+    .employee-details {
+      .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+        
+        mat-icon {
+          font-size: 1.125rem;
+          width: 1.125rem;
+          height: 1.125rem;
+          color: #6b7280;
+        }
+        
+        span {
+          color: #374151;
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+}
+
+// Filter section styles
+.filters-card {
+  .filters-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 1rem;
+    align-items: end;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .search-field {
+      min-width: 0;
+    }
+    
+    .filter-field {
+      min-width: 120px;
+    }
+    
+    .clear-filters-btn {
+      white-space: nowrap;
+    }
+  }
+}
+
+// Status badges
+.status-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  
+  &.active {
+    background-color: #dcfce7;
+    color: #166534;
+  }
+  
+  &.inactive {
+    background-color: #fef2f2;
+    color: #991b1b;
+  }
+  
+  &.on-leave {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+}
+
+// No results section
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: #6b7280;
+  
+  mat-icon {
+    font-size: 4rem;
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 1rem;
+    color: #d1d5db;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #374151;
+  }
+  
+  p {
+    margin-bottom: 1.5rem;
+  }
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.employee-card {
+  animation: fadeInUp 0.6s ease-out;
+  
+  &:nth-child(1) { animation-delay: 0.1s; }
+  &:nth-child(2) { animation-delay: 0.2s; }
+  &:nth-child(3) { animation-delay: 0.3s; }
+  &:nth-child(4) { animation-delay: 0.4s; }
+  &:nth-child(5) { animation-delay: 0.5s; }
+  &:nth-child(6) { animation-delay: 0.6s; }
+}
+
+.filters-card {
+  animation: slideInLeft 0.6s ease-out;
+}
+
+// Responsive design
+@media (max-width: 1024px) {
+  .employees-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .employees-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    
+    .header-right {
+      width: 100%;
+      
+      button {
+        width: 100%;
+      }
+    }
+  }
+  
+  .employee-card {
+    margin-bottom: 1rem;
+  }
+}
+
+// Material overrides
+::ng-deep {
+  .mat-mdc-form-field {
+    .mat-mdc-form-field-flex {
+      border-radius: 0.75rem;
+    }
+    
+    .mat-mdc-form-field-outline {
+      border-radius: 0.75rem;
+    }
+    
+    .mat-mdc-form-field-infix {
+      padding: 0.75rem 0;
+    }
+  }
+  
+  .mat-mdc-select-panel {
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  .mat-mdc-menu-panel {
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  .mat-mdc-menu-item {
+    border-radius: 0.375rem;
+    margin: 0.125rem;
+    
+    &:hover {
+      background: #f3f4f6;
+    }
+    
+    &.mat-mdc-menu-item-highlighted {
+      background: #eff6ff;
+    }
+  }
+}

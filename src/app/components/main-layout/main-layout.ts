@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService, User } from '../../services/auth.service';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet, RouterModule } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -10,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { MatBadgeModule } from '@angular/material/badge';
 
 export interface MenuItem {
   icon: string;
@@ -30,7 +32,11 @@ export interface MenuItem {
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterOutlet
+    RouterOutlet,
+    MatBadgeModule,
+    RouterLink,
+    RouterLinkActive,
+    RouterModule
   ],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss'

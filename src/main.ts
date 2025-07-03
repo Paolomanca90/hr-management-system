@@ -15,6 +15,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { App } from './app/app';
 import { routes } from './app/app.routes';
@@ -25,16 +40,38 @@ bootstrapApplication(App, {
     provideAnimations(),
     provideHttpClient(),
     importProvidersFrom([
+      // Layout & Navigation
       MatToolbarModule,
       MatSidenavModule,
       MatListModule,
       MatIconModule,
       MatButtonModule,
-      MatCardModule,
+      MatMenuModule,
+      MatDividerModule,
+      MatBadgeModule,
+      
+      // Forms & Inputs
       MatFormFieldModule,
       MatInputModule,
-      MatMenuModule,
-      MatSelectModule
+      MatSelectModule,
+      MatCheckboxModule,
+      MatRadioModule,
+      MatSlideToggleModule,
+      MatDatepickerModule,
+      MatNativeDateModule,
+      
+      // Data Display
+      MatCardModule,
+      MatTableModule,
+      MatPaginatorModule,
+      MatSortModule,
+      MatChipsModule,
+      MatTooltipModule,
+      
+      // Feedback
+      MatProgressSpinnerModule,
+      MatSnackBarModule,
+      MatDialogModule
     ])
   ]
-});
+}).catch(err => console.error(err));
