@@ -1,0 +1,119 @@
+<!-- components/employees/employees.component.html -->
+<div class="employees-container">
+  <div class="employees-header">
+    <div class="header-left">
+      <h1>Gestione Dipendenti</h1>
+      <p>Visualizza e gestisci tutti i dipendenti dell'azienda</p>
+    </div>
+    <div class="header-right">
+      <button mat-raised-button color="primary" (click)="addNewEmployee()">
+        <mat-icon>person_add</mat-icon>
+        Nuovo Dipendente
+      </button>
+    </div>
+  </div>
+
+  <!-- Filtri -->
+  <mat-card class="filters-card">
+    <mat-card-content>
+      <div class="filters-row">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Cerca dipendente</mat-label>
+          <input matInput 
+                 [(ngModel)]="searchTerm" 
+                 (input)="applyFilters()" 
+                 placeholder="Nome, cognome o email">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Dipartimento</mat-label>
+          <mat-select [(value)]="selectedDepartment" (selectionChange)="applyFilters()">
+            <mat-option value="">Tutti</mat-option>
+            <mat-option *ngFor="let dept of departments" [value]="dept">
+              {{ dept }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Stato</mat-label>
+          <mat-select [(value)]="selectedStatus" (selectionChange)="applyFilters()">
+            <mat-option value="">Tutti</mat-option>
+            <mat-option value="active">Attivo</mat-option>
+            <mat-option value="inactive">Inattivo</mat-option>
+            <mat-option value="on-leave">In Ferie</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-button (click)="clearFilters()" class="clear-filters-btn">
+          <mat-icon>clear</mat-icon>
+          Pulisci Filtri
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Lista dipendenti -->
+  <div class="employees-grid">
+    <mat-card *ngFor="let employee of filteredEmployees" class="employee-card">
+      <mat-card-content>
+        <div class="employee-header">
+          <div class="employee-avatar">
+            <mat-icon>account_circle</mat-icon>
+          </div>
+          <div class="employee-info">
+            <h3 class="employee-name">{{ employee.firstName }} {{ employee.lastName }}</h3>
+            <p class="employee-position">{{ employee.position }}</p>
+            <div class="employee-status">
+              <span class="status-badge" [style.background-color]="getStatusColor(employee.status)">
+                {{ getStatusText(employee.status) }}
+              </span>
+            </div>
+          </div>
+          <div class="employee-actions">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="editEmployee(employee)">
+                <mat-icon>edit</mat-icon>
+                <span>Modifica</span>
+              </button>
+              <button mat-menu-item (click)="deleteEmployee(employee)">
+                <mat-icon>delete</mat-icon>
+                <span>Elimina</span>
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+
+        <div class="employee-details">
+          <div class="detail-item">
+            <mat-icon>email</mat-icon>
+            <span>{{ employee.email }}</span>
+          </div>
+          <div class="detail-item">
+            <mat-icon>business</mat-icon>
+            <span>{{ employee.department }}</span>
+          </div>
+          <div class="detail-item">
+            <mat-icon>calendar_today</mat-icon>
+            <span>Assunto il {{ employee.hireDate | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="detail-item">
+            <mat-icon>euro</mat-icon>
+            <span>{{ formatCurrency(employee.salary) }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Messaggio quando non ci sono risultati -->
+  <div *ngIf="filteredEmployees.length === 0" class="no-results">
+    <mat-icon>people_outline</mat-icon>
+    <h3>Nessun dipendente trovato</h3>
+    <p>Modifica i filtri di ricerca o aggiungi un nuovo dipendente</p>
+  </div>
+</div>

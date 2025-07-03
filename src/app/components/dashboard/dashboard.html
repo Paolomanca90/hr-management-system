@@ -1,0 +1,93 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Dashboard</h1>
+    <p>Panoramica generale del sistema HR</p>
+  </div>
+
+  <!-- Cards statistiche -->
+  <div class="stats-grid">
+    <mat-card *ngFor="let card of dashboardCards" class="stats-card">
+      <mat-card-content>
+        <div class="stats-content">
+          <div class="stats-icon" [style.background-color]="card.color">
+            <mat-icon>{{ card.icon }}</mat-icon>
+          </div>
+          <div class="stats-info">
+            <h3 class="stats-title">{{ card.title }}</h3>
+            <div class="stats-value">
+              <span *ngIf="card.title.includes('Budget')">{{ formatCurrency(card.value) }}</span>
+              <span *ngIf="!card.title.includes('Budget')">{{ card.value }}</span>
+            </div>
+            <p class="stats-subtitle" *ngIf="card.subtitle">{{ card.subtitle }}</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Sezione principale con grafici e attività -->
+  <div class="dashboard-content">
+    <div class="left-section">
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Andamento Presenze</mat-card-title>
+          <mat-card-subtitle>Ultimi 7 giorni</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="chart-placeholder">
+            <mat-icon>bar_chart</mat-icon>
+            <p>Grafico presenze</p>
+            <small>Integra qui la tua libreria di grafici preferita</small>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="right-section">
+      <mat-card class="activity-card">
+        <mat-card-header>
+          <mat-card-title>Attività Recenti</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="activity-list">
+            <div *ngFor="let activity of recentActivities" class="activity-item">
+              <div class="activity-icon">
+                <mat-icon>notifications</mat-icon>
+              </div>
+              <div class="activity-details">
+                <div class="activity-action">{{ activity.action }}</div>
+                <div class="activity-user">{{ activity.user }}</div>
+                <div class="activity-time">{{ activity.time }}</div>
+              </div>
+            </div>
+          </div>
+          <button mat-button color="primary" class="view-all-btn">
+            Vedi tutte le attività
+          </button>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="quick-actions-card">
+        <mat-card-header>
+          <mat-card-title>Azioni Rapide</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="quick-actions">
+            <button mat-raised-button color="primary" class="action-btn">
+              <mat-icon>person_add</mat-icon>
+              Nuovo Dipendente
+            </button>
+            <button mat-raised-button color="accent" class="action-btn">
+              <mat-icon>event</mat-icon>
+              Gestisci Ferie
+            </button>
+            <button mat-raised-button class="action-btn">
+              <mat-icon>description</mat-icon>
+              Genera Report
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

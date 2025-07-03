@@ -1,1 +1,71 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Configurazione Tailwind v4 */
+@theme {
+  /* Colori personalizzati */
+  --color-primary-50: #e3f2fd;
+  --color-primary-100: #bbdefb;
+  --color-primary-200: #90caf9;
+  --color-primary-300: #64b5f6;
+  --color-primary-400: #42a5f5;
+  --color-primary-500: #2196f3;
+  --color-primary-600: #1e88e5;
+  --color-primary-700: #1976d2;
+  --color-primary-800: #1565c0;
+  --color-primary-900: #0d47a1;
+  
+  /* Colori del tema HR */
+  --color-sidebar: #2c3e50;
+  --color-accent: #e74c3c;
+  --color-success: #2ecc71;
+  --color-warning: #f39c12;
+  
+  /* Spacing personalizzato */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* Font family */
+  --font-family-sans: "Roboto", "Helvetica Neue", Arial, sans-serif;
+  
+  /* Box shadows */
+  --shadow-material: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-material-lg: 0 8px 15px rgba(0, 0, 0, 0.1);
+  --shadow-material-xl: 0 10px 30px rgba(0, 0, 0, 0.1);
+  
+  /* Border radius */
+  --radius-material: 12px;
+}
+
+/* Utility classes personalizzate */
+@layer components {
+  .tw-card {
+    @apply bg-white rounded-[--radius-material] shadow-[--shadow-material] p-6;
+  }
+  
+  .tw-btn-primary {
+    @apply bg-primary-500 text-white px-6 py-3 rounded-lg font-medium transition-colors hover:bg-primary-600;
+  }
+  
+  .tw-page-header {
+    @apply mb-8;
+  }
+  
+  .tw-page-title {
+    @apply text-3xl font-semibold text-gray-800 mb-2;
+  }
+  
+  .tw-sidebar-item {
+    @apply flex items-center px-4 py-3 mx-3 rounded-lg text-gray-300 transition-colors cursor-pointer hover:bg-white hover:bg-opacity-10;
+  }
+  
+  .tw-status-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wide;
+  }
+}
