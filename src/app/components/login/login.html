@@ -2,7 +2,7 @@
   <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
     <div class="text-center mb-8">
       <div class="flex justify-center mb-4">
-        <div class="bg-indigo-600 rounded-full p-3">
+        <div class="bg-indigo-600 rounded-full p-3 px-4">
           <mat-icon class="text-white text-3xl">business</mat-icon>
         </div>
       </div>
@@ -11,39 +11,55 @@
     </div>
     
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
-      <div>
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Username</mat-label>
-          <input matInput formControlName="username" placeholder="Inserisci username" class="w-full">
-          <mat-icon matSuffix>person</mat-icon>
-          <mat-error *ngIf="submitted && f['username'].errors?.['required']">
-            Username richiesto
-          </mat-error>
-        </mat-form-field>
+      <!-- Username Field -->
+      <div class="relative">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+        <div class="relative">
+          <input 
+            type="text"
+            formControlName="username"
+            placeholder="Inserisci username"
+            class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors">
+          <mat-icon class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">person</mat-icon>
+        </div>
+        <div *ngIf="submitted && f['username'].errors?.['required']" class="mt-1 text-sm text-red-600">
+          Username richiesto
+        </div>
       </div>
 
-      <div>
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Password</mat-label>
-          <input matInput type="password" formControlName="password" placeholder="Inserisci password" class="w-full">
-          <mat-icon matSuffix>lock</mat-icon>
-          <mat-error *ngIf="submitted && f['password'].errors?.['required']">
-            Password richiesta
-          </mat-error>
-        </mat-form-field>
+      <!-- Password Field -->
+      <div class="relative">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+        <div class="relative">
+          <input 
+            type="password"
+            formControlName="password"
+            placeholder="Inserisci password"
+            class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors">
+          <mat-icon class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">lock</mat-icon>
+        </div>
+        <div *ngIf="submitted && f['password'].errors?.['required']" class="mt-1 text-sm text-red-600">
+          Password richiesta
+        </div>
       </div>
 
-      <div>
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Dominio</mat-label>
-          <input matInput formControlName="domain" placeholder="Inserisci dominio azienda" class="w-full">
-          <mat-icon matSuffix>domain</mat-icon>
-          <mat-error *ngIf="submitted && f['domain'].errors?.['required']">
-            Dominio richiesto
-          </mat-error>
-        </mat-form-field>
+      <!-- Domain Field -->
+      <div class="relative">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Dominio</label>
+        <div class="relative">
+          <input 
+            type="text"
+            formControlName="domain"
+            placeholder="Inserisci dominio azienda"
+            class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors">
+          <mat-icon class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">domain</mat-icon>
+        </div>
+        <div *ngIf="submitted && f['domain'].errors?.['required']" class="mt-1 text-sm text-red-600">
+          Dominio richiesto
+        </div>
       </div>
 
+      <!-- Error Message -->
       <div class="bg-red-50 border border-red-200 rounded-lg p-4" *ngIf="error">
         <div class="flex items-center">
           <mat-icon class="text-red-500 mr-2">error</mat-icon>
@@ -51,12 +67,11 @@
         </div>
       </div>
 
+      <!-- Submit Button -->
       <button 
-        mat-raised-button 
-        color="primary" 
         type="submit" 
         [disabled]="loading" 
-        class="w-full py-3 bg-indigo-600 text-white rounded-lg font-medium transition-colors hover:bg-indigo-700 disabled:bg-gray-300">
+        class="w-full py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-lg transition-all duration-200 hover:from-indigo-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
         <span *ngIf="loading" class="flex items-center justify-center">
           <mat-icon class="animate-spin mr-2">autorenew</mat-icon>
           Accesso in corso...

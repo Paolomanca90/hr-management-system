@@ -88,8 +88,8 @@
       <!-- Header della card -->
       <div class="flex items-start justify-between mb-4">
         <div class="flex items-center space-x-3">
-          <div class="bg-indigo-100 rounded-full p-3">
-            <mat-icon class="text-indigo-600 text-2xl">account_circle</mat-icon>
+          <div class="bg-indigo-100 rounded-full p-3 flex items-center justify-center">
+            <mat-icon class="text-indigo-600">account_circle</mat-icon>
           </div>
           <div>
             <h3 class="text-lg font-semibold text-gray-900">
@@ -118,18 +118,18 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="editEmployee(employee)">
-              <mat-icon class="mr-2">edit</mat-icon>
+          <mat-menu #menu="matMenu" class="full-menu">
+            <button mat-menu-item (click)="editEmployee(employee)" class="menu-item-default">
+              <mat-icon>edit</mat-icon>
               <span>Modifica</span>
             </button>
-            <button mat-menu-item (click)="viewEmployee(employee)">
-              <mat-icon class="mr-2">visibility</mat-icon>
+            <button mat-menu-item (click)="viewEmployee(employee)" class="menu-item-default">
+              <mat-icon>visibility</mat-icon>
               <span>Visualizza</span>
             </button>
             <mat-divider></mat-divider>
-            <button mat-menu-item (click)="deleteEmployee(employee)" class="text-red-600">
-              <mat-icon class="mr-2">delete</mat-icon>
+            <button mat-menu-item (click)="deleteEmployee(employee)" class="menu-item-delete">
+              <mat-icon>delete</mat-icon>
               <span>Elimina</span>
             </button>
           </mat-menu>

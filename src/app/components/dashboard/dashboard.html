@@ -7,7 +7,7 @@
         <p class="text-gray-600 mt-1">Panoramica generale del sistema HR</p>
       </div>
       <div class="flex items-center space-x-3">
-        <div class="bg-indigo-50 rounded-lg p-3">
+        <div class="bg-indigo-50 rounded-lg p-3 py-2">
           <mat-icon class="text-indigo-600 text-2xl">dashboard</mat-icon>
         </div>
         <div class="text-sm text-gray-500">
@@ -27,7 +27,7 @@
         <div class="flex-1">
           <div class="flex items-center mb-3">
             <div 
-              class="rounded-lg p-3 mr-4"
+              class="rounded-lg p-3 py-2 mr-4"
               [style.background-color]="card.color + '20'"
               [style.border]="'1px solid ' + card.color + '40'">
               <mat-icon [style.color]="card.color" class="text-2xl">{{ card.icon }}</mat-icon>
@@ -111,8 +111,8 @@
         <div class="p-6">
           <div class="space-y-4">
             <div *ngFor="let activity of recentActivities" class="flex items-start space-x-3">
-              <div class="bg-indigo-100 rounded-full p-2 flex-shrink-0">
-                <mat-icon class="text-indigo-600 text-sm">notifications</mat-icon>
+              <div class="bg-indigo-100 rounded-full p-2 flex-shrink-0 flex items-center justify-center">
+                <mat-icon class="text-indigo-600">notifications</mat-icon>
               </div>
               <div class="flex-1 min-w-0">
                 <div class="text-sm font-medium text-gray-900">{{ activity.action }}</div>

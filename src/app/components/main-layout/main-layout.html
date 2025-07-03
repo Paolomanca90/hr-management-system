@@ -22,8 +22,8 @@
         <!-- Info utente -->
         <div *ngIf="currentUser && sidenavOpened" class="bg-slate-700 rounded-lg p-4">
           <div class="flex items-center">
-            <div class="bg-indigo-500 rounded-full p-2 mr-3">
-              <mat-icon class="text-white text-xl">account_circle</mat-icon>
+            <div class="bg-indigo-500 rounded-full p-2 mr-3 items-center justify-center flex">
+              <mat-icon class="text-white">account_circle</mat-icon>
             </div>
             <div class="text-white flex-1">
               <div class="font-medium truncate">{{ currentUser.username }}</div>
