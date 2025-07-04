@@ -4,7 +4,7 @@
   <!-- Sidebar -->
   <div class="drawer-side">
     <label for="drawer-toggle" aria-label="close sidebar" class="drawer-overlay"></label>
-    <aside class="min-h-full bg-base-100 dark:bg-base-300" 
+    <aside class="min-h-full bg-base-100 dark:bg-base-300 flex flex-col" 
            [class.w-80]="sidenavOpened && isCompanyUser" 
            [class.w-64]="sidenavOpened && !isCompanyUser"
            [class.w-16]="!sidenavOpened">
@@ -41,7 +41,7 @@
       </div>
 
       <!-- Menu di navigazione -->
-      <div class="flex-1 overflow-y-auto">
+      <div class="flex-1 overflow-y-auto overflow-x-hidden">
         <ul class="menu p-2 space-y-1" *ngIf="sidenavOpened">
           <li *ngFor="let item of menuItems">
             <!-- Menu item con figli (espandibile) -->
@@ -88,19 +88,19 @@
         </ul>
 
         <!-- Menu compatto quando la sidebar è chiusa -->
-        <ul class="menu p-2 space-y-1" *ngIf="!sidenavOpened">
-          <li *ngFor="let item of menuItems">
-            <div class="tooltip tooltip-right" [attr.data-tip]="item.label">
+        <div class="flex flex-col items-center space-y-2 px-2" *ngIf="!sidenavOpened">
+          <div *ngFor="let item of getMainMenuItems()" class="w-full flex justify-center">
+            <div class="tooltip tooltip-right z-50" [attr.data-tip]="item.label">
               <a 
                 [routerLink]="item.route || '/app/dashboard'"
-                class="flex items-center justify-center p-2 rounded-lg hover:bg-base-200 transition-all duration-200"
+                class="flex items-center justify-center w-12 h-12 rounded-lg hover:bg-base-200 transition-all duration-200"
                 [class.text-primary]="isMenuItemActive(item)"
                 [class.bg-blue-100]="isMenuItemActive(item)">
                 <i [class]="item.icon + ' text-lg'"></i>
               </a>
             </div>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
 
       <!-- Footer della sidebar -->
@@ -123,9 +123,9 @@
       </div>
 
       <!-- Footer compatto -->
-      <div class="p-2 border-t border-base-300 space-y-2" *ngIf="!sidenavOpened">
-        <div class="tooltip tooltip-right" [attr.data-tip]="getThemeLabel()">
-          <label class="swap swap-rotate btn btn-ghost btn-sm btn-circle">
+      <div class="flex flex-col items-center space-y-2 p-2 border-t border-base-300" *ngIf="!sidenavOpened">
+        <div class="tooltip tooltip-right z-50" [attr.data-tip]="getThemeLabel()">
+          <label class="swap swap-rotate btn btn-ghost btn-sm w-12 h-12 btn-circle">
             <input type="checkbox" 
                    [checked]="isDarkMode()" 
                    (change)="toggleTheme()" />
@@ -134,8 +134,8 @@
           </label>
         </div>
         
-        <div class="tooltip tooltip-right" [attr.data-tip]="'Logout'">
-          <button class="btn btn-error btn-sm btn-circle" (click)="logout()">
+        <div class="tooltip tooltip-right z-50" [attr.data-tip]="'Logout'">
+          <button class="btn btn-error btn-sm w-12 h-12 btn-circle" (click)="logout()">
             <i class="fas fa-sign-out-alt"></i>
           </button>
         </div>

@@ -1,6 +1,91 @@
 // Transizioni smooth per la sidebar
 .drawer-side aside {
   transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  
+  // Nasconde la scrollbar quando collassata
+  &.w-16 {
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+}
+
+// Tooltip con z-index alto per apparire sopra tutto
+.tooltip {
+  z-index: 9999 !important;
+  
+  &:before,
+  &:after {
+    z-index: 9999 !important;
+  }
+  
+  // Fix per tooltip-right che non si vede
+  &.tooltip-right {
+    &:before {
+      left: 100%;
+      margin-left: 8px;
+      white-space: nowrap;
+      max-width: none;
+      width: auto;
+    }
+    
+    &:after {
+      left: 100%;
+      margin-left: 4px;
+    }
+  }
+}
+
+// Tooltip migliorato per posizionamento
+.tooltip-right:before {
+  margin-left: 8px;
+}
+
+.tooltip-right:after {
+  margin-left: 4px;
+}
+
+// Stili per menu collassato
+.w-16 {
+  .menu-icon-collapsed {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin: 0 auto;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: hsl(var(--b2));
+      transform: scale(1.05);
+    }
+    
+    &.active {
+      background-color: hsl(var(--p) / 0.1);
+      color: hsl(var(--p));
+    }
+  }
+}
+
+// Prevenzione overflow e centratura
+.drawer-side aside {
+  .menu {
+    width: 100%;
+    
+    li {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+  
+  // Quando la sidebar è collassata
+  &.w-16 {
+    .menu {
+      padding: 0.5rem 0.25rem;
+    }
+  }
 }
 
 // Animazioni personalizzate
@@ -39,6 +124,7 @@
   &:nth-child(3) { animation-delay: 0.3s; }
   &:nth-child(4) { animation-delay: 0.4s; }
   &:nth-child(5) { animation-delay: 0.5s; }
+  &:nth-child(6) { animation-delay: 0.6s; }
 }
 
 // Stili per dark mode
@@ -49,5 +135,53 @@ html[data-theme="dark"] {
   
   .navbar {
     border-color: hsl(var(--b3));
+  }
+}
+
+// Miglioramenti hover per icone centrate
+.flex.flex-col.items-center {
+  .tooltip {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+    a {
+      transition: all 0.2s ease;
+      
+      &:hover {
+        transform: scale(1.1);
+        background-color: hsl(var(--b2));
+      }
+      
+      &.text-primary {
+        background-color: hsl(var(--p) / 0.1);
+      }
+    }
+  }
+}
+
+// Footer compatto migliorato
+.border-t.border-base-300 {
+  &.flex.flex-col.items-center {
+    .tooltip {
+      width: auto;
+      
+      label, button {
+        transition: all 0.2s ease;
+        
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}
+
+// Responsive improvements
+@media (max-width: 1024px) {
+  .drawer-side aside {
+    &.w-16 {
+      width: 4rem !important;
+    }
   }
 }

@@ -39,7 +39,6 @@ export class MainLayout implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    // Subscribe to user changes
     this.authService.currentUser$
       .pipe(takeUntil(this.destroy$))
       .subscribe(user => {
@@ -48,14 +47,12 @@ export class MainLayout implements OnInit, OnDestroy {
         this.loadMenu();
       });
     
-    // Subscribe to theme changes
     this.themeService.currentTheme$
       .pipe(takeUntil(this.destroy$))
       .subscribe(theme => {
         this.currentTheme = theme;
       });
 
-    // Subscribe to router events to expand menu automatically
     this.router.events
       .pipe(
         filter(event => event instanceof NavigationEnd),
@@ -82,11 +79,10 @@ export class MainLayout implements OnInit, OnDestroy {
   }
 
   private handleRouteChange(url: string): void {
-    // Find menu item that matches current route and expand its parents
     const matchingMenuItem = this.findMenuItemByRoute(this.menuItems, url);
     if (matchingMenuItem) {
       this.menuService.expandToMenuItem(matchingMenuItem.id);
-      this.loadMenu(); // Reload to get updated expanded states
+      this.loadMenu();
     }
   }
 
@@ -110,7 +106,7 @@ export class MainLayout implements OnInit, OnDestroy {
   toggleMenuItem(menuItem: MenuItem): void {
     if (menuItem.children && menuItem.children.length > 0) {
       this.menuService.toggleMenuItem(menuItem.id);
-      this.loadMenu(); // Reload to get updated expanded states
+      this.loadMenu();
     }
   }
 
@@ -147,18 +143,34 @@ export class MainLayout implements OnInit, OnDestroy {
     this.router.navigate([route]);
   }
 
-  // Utility methods for template
   hasChildren(item: MenuItem): boolean {
     return !!(item.children && item.children.length > 0);
   }
 
   isMenuItemActive(item: MenuItem): boolean {
     if (item.route) {
-      return this.router.url === item.route;
+      // Controllo esatto per route dirette
+      if (this.router.url === item.route) {
+        return true;
+      }
+      
+      // Controllo per route simili (es. /app/employees vs /app/employees/something)
+      if (this.router.url.startsWith(item.route + '/')) {
+        return true;
+      }
+      
+      // Controllo speciale per items "diretti" nella sidebar collassata
+      if (item.id.includes('-direct')) {
+        const baseRoute = item.route?.split('/')[2];
+        const currentRoute = this.router.url.split('/')[2];
+        return baseRoute === currentRoute;
+      }
     }
+    
     if (item.children) {
       return item.children.some(child => this.isMenuItemActive(child));
     }
+    
     return false;
   }
 
@@ -174,5 +186,34 @@ export class MainLayout implements OnInit, OnDestroy {
     }
     
     return classes.join(' ');
+  }
+
+  // Ottieni menu items intelligenti per la sidebar collassata
+  getMainMenuItems(): MenuItem[] {
+    const intelligentItems: MenuItem[] = [];
+    
+    if (this.isCompanyUser) {
+      // Per utenti aziendali, crea items diretti dalle funzioni più usate
+      intelligentItems.push(
+        { id: 'dashboard', icon: 'fas fa-tachometer-alt', label: 'Dashboard', route: '/app/dashboard' },
+        { id: 'employees-direct', icon: 'fas fa-users', label: 'Dipendenti', route: '/app/employees' },
+        { id: 'attendance-direct', icon: 'fas fa-clock', label: 'Presenze', route: '/app/attendance/archives' },
+        { id: 'payroll-direct', icon: 'fas fa-money-check-alt', label: 'Buste Paga', route: '/app/payroll' },
+        { id: 'reports-direct', icon: 'fas fa-chart-bar', label: 'Report', route: '/app/reports' },
+        { id: 'settings-direct', icon: 'fas fa-cog', label: 'Impostazioni', route: '/app/settings' }
+      );
+    } else {
+      // Per dipendenti, usa i menu esistenti ma con route dirette alle funzioni principali
+      intelligentItems.push(
+        { id: 'dashboard', icon: 'fas fa-tachometer-alt', label: 'Dashboard', route: '/app/dashboard' },
+        { id: 'canteen-direct', icon: 'fas fa-utensils', label: 'Mensa', route: '/app/canteen/tables' },
+        { id: 'projects-direct', icon: 'fas fa-briefcase', label: 'Commesse', route: '/app/projects/archives' },
+        { id: 'tickets-direct', icon: 'fas fa-ticket-alt', label: 'Ticket', route: '/app/tickets/management' },
+        { id: 'timecards-direct', icon: 'fas fa-clock', label: 'Timbrature', route: '/app/timecards' },
+        { id: 'leaves-direct', icon: 'fas fa-calendar-plus', label: 'Ferie', route: '/app/leaves/request' }
+      );
+    }
+    
+    return intelligentItems;
   }
 }
