@@ -103,7 +103,11 @@ export class MainLayout implements OnInit, OnDestroy {
     this.sidenavOpened = !this.sidenavOpened;
   }
 
-  toggleMenuItem(menuItem: MenuItem): void {
+  toggleMenuItem(menuItem: MenuItem, event?: Event): void {
+    if (event) {
+      event.preventDefault(); // Previene il comportamento nativo di details/summary
+      event.stopPropagation(); // Previene la propagazione dell'evento
+    }
     if (menuItem.children && menuItem.children.length > 0) {
       this.menuService.toggleMenuItem(menuItem.id);
       this.loadMenu();

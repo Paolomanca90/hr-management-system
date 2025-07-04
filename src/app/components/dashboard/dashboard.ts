@@ -167,9 +167,9 @@ export class Dashboard implements OnInit, OnDestroy {
     if (this.isCompanyUser) {
       return [
         { label: 'Nuovo Dipendente', icon: 'fas fa-user-plus', route: '/app/employees', color: 'btn-primary' },
-        { label: 'Gestisci Ferie', icon: 'fas fa-calendar-alt', route: '/app/leaves', color: 'btn-success' },
-        { label: 'Genera Report', icon: 'fas fa-file-alt', route: '/app/reports', color: 'btn-info' },
-        { label: 'Buste Paga', icon: 'fas fa-money-check-alt', route: '/app/payroll', color: 'btn-warning' }
+        { label: 'Gestisci Ferie', icon: 'fas fa-calendar-alt', route: '/app/leaves', color: 'btn-primary' },
+        { label: 'Genera Report', icon: 'fas fa-file-alt', route: '/app/reports', color: 'btn-primary' },
+        { label: 'Buste Paga', icon: 'fas fa-money-check-alt', route: '/app/payroll', color: 'btn-primary' }
       ];
     } else {
       return [

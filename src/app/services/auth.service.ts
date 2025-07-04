@@ -13,7 +13,7 @@ export interface User {
   id: string;
   username: string;
   domain: string;
-  role: 'admin' | 'company' | 'user' | 'employee';
+  role: 'admin' | 'company' | 'employee';
   company: string;
   permissions?: string[];
 }
@@ -43,16 +43,8 @@ export class AuthService {
       company: 'Azienda SpA',
       permissions: ['company_management', 'employee_management', 'reports']
     },
-    'dipendente.user': {
-      id: '3',
-      username: 'dipendente',
-      domain: 'user',
-      role: 'user',
-      company: 'User Company',
-      permissions: ['self_service', 'canteen', 'tickets']
-    },
     'employee.worker': {
-      id: '4',
+      id: '3',
       username: 'employee',
       domain: 'worker',
       role: 'employee',
@@ -114,7 +106,7 @@ export class AuthService {
     return user.permissions.includes('all') || user.permissions.includes(permission);
   }
 
-  getUserRole(): 'admin' | 'company' | 'user' | 'employee' | null {
+  getUserRole(): 'admin' | 'company' | 'employee' | null {
     const user = this.currentUserValue;
     return user ? user.role : null;
   }
@@ -126,6 +118,6 @@ export class AuthService {
 
   isRegularUser(): boolean {
     const role = this.getUserRole();
-    return role === 'user' || role === 'employee';
+    return role === 'employee';
   }
 }

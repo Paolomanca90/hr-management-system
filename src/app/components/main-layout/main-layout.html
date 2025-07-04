@@ -12,8 +12,8 @@
       <!-- Header della sidebar -->
       <div class="p-4 border-b border-base-300">
         <div class="flex items-center mb-4">
-          <div class="bg-primary rounded-lg p-2 px-4 mr-3">
-            <i class="fas fa-building text-white text-xl"></i>
+          <div class="mr-3">
+            <img src="/Inaz-icona.png" alt="icona-inaz" class="w-8 h-8 mx-2">
           </div>
           <div *ngIf="sidenavOpened" class="text-base-content">
             <h2 class="text-lg font-bold">HR System</h2>
@@ -49,7 +49,7 @@
               <details [open]="item.expanded">
                 <summary 
                   class="flex items-center cursor-pointer hover:bg-base-200 p-2 rounded-lg transition-all duration-200 w-full"
-                  (click)="toggleMenuItem(item)"
+                  (click)="toggleMenuItem(item, $event)"
                   [class.text-primary]="isMenuItemActive(item)">
                   <i [class]="item.icon + ' text-sm mr-3'"></i>
                   <span class="font-medium flex-1">{{ item.label }}</span>
@@ -63,7 +63,7 @@
                       <details [open]="child.expanded" class="block w-full">
                         <summary 
                           class="flex items-center cursor-pointer hover:bg-base-200 p-2 rounded-lg transition-all duration-200 text-sm w-full"
-                          (click)="toggleMenuItem(child)"
+                          (click)="toggleMenuItem(child, $event)"
                           [class.text-primary]="isMenuItemActive(child)">
                           <i [class]="child.icon + ' text-sm mr-3'"></i>
                           <span class="font-medium flex-1">{{ child.label }}</span>
@@ -77,7 +77,7 @@
                               <details [open]="subchild.expanded" class="block w-full">
                                 <summary 
                                   class="flex items-center cursor-pointer hover:bg-base-200 rounded-lg p-2 transition-all duration-200 text-sm w-full"
-                                  (click)="toggleMenuItem(subchild)"
+                                  (click)="toggleMenuItem(subchild, $event)"
                                   [class.text-primary]="isMenuItemActive(subchild)">
                                   <i [class]="subchild.icon + ' text-sm mr-3'"></i>
                                   <span class="font-medium flex-1">{{ subchild.label }}</span>
