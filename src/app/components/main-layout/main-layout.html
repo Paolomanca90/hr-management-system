@@ -7,7 +7,7 @@
     <aside class="min-h-full bg-base-100 dark:bg-base-300 flex flex-col" 
            [class.w-80]="sidenavOpened && isCompanyUser" 
            [class.w-64]="sidenavOpened && !isCompanyUser"
-           [class.w-16]="!sidenavOpened">
+           [class.w-[5rem]]="!sidenavOpened">
       
       <!-- Header della sidebar -->
       <div class="p-4 border-b border-base-300">
@@ -45,13 +45,13 @@
         <ul class="menu p-2 space-y-1 block" *ngIf="sidenavOpened">
           <li *ngFor="let item of menuItems">
             <!-- Menu item con figli (espandibile) -->
-            <div *ngIf="hasChildren(item)">
+            <div *ngIf="hasChildren(item)" class="flex items-center rounded-lg hover:bg-base-200 transition-all duration-200 text-sm w-full">
               <details [open]="item.expanded">
                 <summary 
-                  class="flex items-center cursor-pointer hover:bg-base-200 rounded-lg p-2 transition-all duration-200 w-full"
+                  class="flex items-center cursor-pointer hover:bg-base-200 p-2 rounded-lg transition-all duration-200 w-full"
                   (click)="toggleMenuItem(item)"
                   [class.text-primary]="isMenuItemActive(item)">
-                  <i [class]="item.icon + ' text-lg mr-3'"></i>
+                  <i [class]="item.icon + ' text-sm mr-3'"></i>
                   <span class="font-medium flex-1">{{ item.label }}</span>
                   <span *ngIf="item.badge" class="badge badge-primary badge-sm">{{ item.badge }}</span>
                 </summary>
@@ -59,13 +59,13 @@
                 <ul class="ml-6 mt-2 space-y-1">
                   <li *ngFor="let child of item.children">
                     <!-- Menu item con figli (espandibile) -->
-                    <div *ngIf="hasChildren(child)" class="flex items-center p-2 rounded-lg hover:bg-base-200 transition-all duration-200 text-sm w-full">
+                    <div *ngIf="hasChildren(child)" class="flex items-center rounded-lg p-0 hover:bg-base-200 transition-all duration-200 text-sm w-full">
                       <details [open]="child.expanded" class="block w-full">
                         <summary 
-                          class="flex items-center cursor-pointer hover:bg-base-200 rounded-lg transition-all duration-200 text-sm w-full"
+                          class="flex items-center cursor-pointer hover:bg-base-200 p-2 rounded-lg transition-all duration-200 text-sm w-full"
                           (click)="toggleMenuItem(child)"
                           [class.text-primary]="isMenuItemActive(child)">
-                          <i [class]="child.icon + ' text-lg mr-3'"></i>
+                          <i [class]="child.icon + ' text-sm mr-3'"></i>
                           <span class="font-medium flex-1">{{ child.label }}</span>
                           <span *ngIf="child.badge" class="badge badge-primary badge-sm">{{ child.badge }}</span>
                         </summary>
@@ -73,13 +73,13 @@
                         <ul class="ml-6 mt-2 space-y-1">
                           <li *ngFor="let subchild of child.children">
                             <!-- Menu item con figli (espandibile) -->
-                            <div *ngIf="hasChildren(subchild)" class="flex items-center p-2 rounded-lg hover:bg-base-200 transition-all duration-200 text-sm w-full">
+                            <div *ngIf="hasChildren(subchild)" class="flex items-center rounded-lg hover:bg-base-200 p-0 transition-all duration-200 text-sm w-full">
                               <details [open]="subchild.expanded" class="block w-full">
                                 <summary 
-                                  class="flex items-center cursor-pointer hover:bg-base-200 rounded-lg transition-all duration-200 text-sm w-full"
+                                  class="flex items-center cursor-pointer hover:bg-base-200 rounded-lg p-2 transition-all duration-200 text-sm w-full"
                                   (click)="toggleMenuItem(subchild)"
                                   [class.text-primary]="isMenuItemActive(subchild)">
-                                  <i [class]="subchild.icon + ' text-lg mr-3'"></i>
+                                  <i [class]="subchild.icon + ' text-sm mr-3'"></i>
                                   <span class="font-medium flex-1">{{ subchild.label }}</span>
                                   <span *ngIf="subchild.badge" class="badge badge-primary badge-sm">{{ subchild.badge }}</span>
                                 </summary>
@@ -148,9 +148,9 @@
         </ul>
 
         <!-- Menu compatto quando la sidebar è chiusa -->
-        <div class="flex flex-col items-center space-y-2 px-2" *ngIf="!sidenavOpened">
+        <div class="flex flex-col items-center space-y-2 p-2" *ngIf="!sidenavOpened">
           <div *ngFor="let item of getMainMenuItems()" class="w-full flex justify-center">
-            <div class="tooltip tooltip-right z-50" [attr.data-tip]="item.label">
+            <div>
               <a 
                 [routerLink]="item.route || '/app/dashboard'"
                 class="flex items-center justify-center w-12 h-12 rounded-lg hover:bg-base-200 transition-all duration-200"
@@ -176,7 +176,7 @@
           <span class="ml-2">{{ getThemeLabel() }}</span>
         </div>
         
-        <button class="btn btn-error btn-sm w-full" (click)="logout()">
+        <button class="btn btn-error btn-sm w-full text-white" (click)="logout()">
           <i class="fas fa-sign-out-alt mr-2"></i>
           <span>Logout</span>
         </button>
@@ -184,19 +184,19 @@
 
       <!-- Footer compatto -->
       <div class="flex flex-col items-center space-y-2 p-2 border-t border-base-300" *ngIf="!sidenavOpened">
-        <div class="tooltip tooltip-right z-50" [attr.data-tip]="getThemeLabel()">
+        <div>
           <label class="swap swap-rotate btn btn-ghost btn-sm w-12 h-12 btn-circle">
             <input type="checkbox" 
                    [checked]="isDarkMode()" 
                    (change)="toggleTheme()" />
-            <i [class]="getThemeIcon() + ' swap-on'"></i>
-            <i [class]="getThemeIcon() + ' swap-off'"></i>
+            <i [class]="getThemeIcon() + ' swap-on text-lg'"></i>
+            <i [class]="getThemeIcon() + ' swap-off text-lg'"></i>
           </label>
         </div>
         
-        <div class="tooltip tooltip-right z-50" [attr.data-tip]="'Logout'">
-          <button class="btn btn-error btn-sm w-12 h-12 btn-circle" (click)="logout()">
-            <i class="fas fa-sign-out-alt"></i>
+        <div>
+          <button class="btn btn-error btn-sm w-12 h-12 btn-circle text-white" (click)="logout()">
+            <i class="fas fa-sign-out-alt text-lg"></i>
           </button>
         </div>
       </div>
