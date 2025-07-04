@@ -13,7 +13,7 @@
         </div>
         
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
-          <!-- Username Field -->
+          <!-- Username -->
           <div class="form-control">
             <label class="label">
               <span class="label-text font-medium">Username</span>
@@ -32,7 +32,7 @@
             </div>
           </div>
 
-          <!-- Password Field -->
+          <!-- Password -->
           <div class="form-control">
             <label class="label">
               <span class="label-text font-medium">Password</span>
@@ -51,7 +51,7 @@
             </div>
           </div>
 
-          <!-- Domain Field -->
+          <!-- Domain -->
           <div class="form-control">
             <label class="label">
               <span class="label-text font-medium">Dominio</span>
@@ -70,13 +70,13 @@
             </div>
           </div>
 
-          <!-- Error Message -->
+          <!-- Error -->
           <div class="alert alert-error" *ngIf="error">
             <i class="fas fa-exclamation-triangle"></i>
             <span>{{ error }}</span>
           </div>
 
-          <!-- Submit Button -->
+          <!-- Submit -->
           <button 
             type="submit" 
             [disabled]="loading" 
@@ -90,8 +90,62 @@
 
         <div class="divider"></div>
         
-        <div class="text-center text-sm text-base-content/60">
+        <!-- Demo Users -->
+        <div class="space-y-3">
+          <div class="text-center">
+            <p class="text-sm font-medium text-base-content mb-3">Account Demo Disponibili:</p>
+          </div>
+          
+          <div class="grid grid-cols-1 gap-2">
+            <button 
+              type="button" 
+              class="btn btn-outline btn-sm text-left justify-start"
+              (click)="fillDemoCredentials('admin', 'company')">
+              <i class="fas fa-crown mr-2 text-yellow-500"></i>
+              <div class="text-left">
+                <div class="font-medium">Admin Aziendale</div>
+                <div class="text-xs opacity-60">admin / company</div>
+              </div>
+            </button>
+            
+            <button 
+              type="button" 
+              class="btn btn-outline btn-sm text-left justify-start"
+              (click)="fillDemoCredentials('manager', 'azienda')">
+              <i class="fas fa-briefcase mr-2 text-blue-500"></i>
+              <div class="text-left">
+                <div class="font-medium">Manager Aziendale</div>
+                <div class="text-xs opacity-60">manager / azienda</div>
+              </div>
+            </button>
+            
+            <button 
+              type="button" 
+              class="btn btn-outline btn-sm text-left justify-start"
+              (click)="fillDemoCredentials('dipendente', 'user')">
+              <i class="fas fa-user mr-2 text-green-500"></i>
+              <div class="text-left">
+                <div class="font-medium">Dipendente</div>
+                <div class="text-xs opacity-60">dipendente / user</div>
+              </div>
+            </button>
+            
+            <button 
+              type="button" 
+              class="btn btn-outline btn-sm text-left justify-start"
+              (click)="fillDemoCredentials('employee', 'worker')">
+              <i class="fas fa-hard-hat mr-2 text-purple-500"></i>
+              <div class="text-left">
+                <div class="font-medium">Operaio</div>
+                <div class="text-xs opacity-60">employee / worker</div>
+              </div>
+            </button>
+          </div>
+        </div>
+        
+        <div class="text-center text-sm text-base-content/60 mt-4">
           <p>Sistema di gestione delle risorse umane</p>
+          <p class="text-xs mt-1">Usa qualsiasi password per gli account demo</p>
         </div>
       </div>
     </div>

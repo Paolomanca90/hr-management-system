@@ -1,191 +1,239 @@
+<!-- src/app/components/dashboard/dashboard.html -->
 <div class="space-y-6">
-  <!-- Header della dashboard -->
-  <div class="card bg-base-100 shadow-sm">
-    <div class="card-body">
-      <div class="flex items-center justify-between">
-        <div>
-          <h1 class="text-3xl font-bold text-base-content">Dashboard</h1>
-          <p class="text-base-content/70 mt-1">Panoramica generale del sistema HR</p>
-        </div>
-        <div class="flex items-center space-x-3">
-          <div class="bg-primary/10 rounded-lg p-3 px-4">
-            <i class="fas fa-tachometer-alt text-primary text-2xl"></i>
-          </div>
-          <div class="text-sm text-base-content/60">
-            <div>Ultimo aggiornamento</div>
-            <div class="font-medium">{{ getCurrentDateTime() }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <!-- Loading indicator -->
+  <div *ngIf="loading" class="flex justify-center items-center py-12">
+    <span class="loading loading-spinner loading-lg"></span>
   </div>
 
-  <!-- Cards statistiche -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-    <div 
-      *ngFor="let card of dashboardCards; let i = index" 
-      class="card bg-base-100 shadow-sm hover:shadow-lg transition-all duration-200 hover:scale-105">
+  <!-- Dashboard content -->
+  <div *ngIf="!loading">
+    <!-- Header della dashboard -->
+    <div class="card bg-base-100 shadow-sm">
       <div class="card-body">
         <div class="flex items-center justify-between">
-          <div class="flex-1">
-            <div class="flex items-center mb-3">
-              <div class="rounded-lg p-3 mr-4" [ngClass]="card.color + '/10'">
-                <i [class]="card.icon + ' text-2xl'" [ngClass]="card.color.replace('bg-', 'text-')"></i>
-              </div>
-              <div class="text-sm text-base-content/60 font-medium uppercase tracking-wide">
-                {{ card.title }}
-              </div>
-            </div>
-            <div class="text-2xl font-bold text-base-content mb-2">
-              <span *ngIf="card.title.includes('Budget')">{{ formatCurrency(card.value) }}</span>
-              <span *ngIf="!card.title.includes('Budget')">{{ card.value }}</span>
-            </div>
-            <div class="flex items-center text-sm" *ngIf="card.subtitle">
-              <i class="fas fa-trending-up text-success text-sm mr-1"></i>
-              <span class="text-base-content/70">{{ card.subtitle }}</span>
-            </div>
+          <div>
+            <h1 class="text-3xl font-bold text-base-content">
+              {{ isCompanyUser ? 'Dashboard Aziendale' : 'Il Mio Dashboard' }}
+            </h1>
+            <p class="text-base-content/70 mt-1">
+              {{ isCompanyUser ? 'Panoramica generale del sistema HR' : 'Le tue informazioni personali' }}
+            </p>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Contenuto principale -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- Sezione sinistra - Grafici -->
-    <div class="lg:col-span-2 space-y-6">
-      <!-- Grafico presenze -->
-      <div class="card bg-base-100 shadow-sm">
-        <div class="card-body">
-          <div class="flex items-center justify-between mb-4">
-            <div>
-              <h3 class="text-lg font-semibold text-base-content">Andamento Presenze</h3>
-              <p class="text-base-content/60 text-sm">Ultimi 7 giorni</p>
+          <div class="flex items-center space-x-3">
+            <div class="bg-primary/10 rounded-lg p-3 px-4">
+              <i class="fas fa-tachometer-alt text-primary text-2xl"></i>
             </div>
-            <div class="dropdown dropdown-end">
-              <div tabindex="0" role="button" class="btn btn-ghost btn-sm">
-                <i class="fas fa-ellipsis-v"></i>
-              </div>
-              <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                <li><a><i class="fas fa-download mr-2"></i>Esporta</a></li>
-                <li><a><i class="fas fa-refresh mr-2"></i>Aggiorna</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div class="flex items-center justify-center h-64 bg-base-200 rounded-lg">
-            <div class="text-center">
-              <div class="bg-primary/10 rounded-full p-4 mx-auto mb-4 w-16 h-16 flex items-center justify-center">
-                <i class="fas fa-chart-bar text-primary text-2xl"></i>
-              </div>
-              <h4 class="text-lg font-medium text-base-content mb-2">Grafico Presenze</h4>
-              <p class="text-base-content/60 text-sm">Integra qui la tua libreria di grafici preferita</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Statistiche aggiuntive -->
-      <div class="card bg-base-100 shadow-sm">
-        <div class="card-body">
-          <h3 class="text-lg font-semibold text-base-content mb-4">Statistiche Mensili</h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-              <div class="text-2xl font-bold text-blue-600">95%</div>
-              <div class="text-sm text-base-content/70">Presenza Media</div>
-            </div>
-            <div class="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-              <div class="text-2xl font-bold text-green-600">18</div>
-              <div class="text-sm text-base-content/70">Giorni Lavorati</div>
-            </div>
-            <div class="text-center p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
-              <div class="text-2xl font-bold text-yellow-600">12</div>
-              <div class="text-sm text-base-content/70">Ore Straordinari</div>
+            <div class="text-sm text-base-content/60">
+              <div>Ultimo aggiornamento</div>
+              <div class="font-medium">{{ getCurrentDateTime() }}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Sezione destra -->
-    <div class="space-y-6">
-      <!-- Attività recenti -->
-      <div class="card bg-base-100 shadow-sm">
+    <!-- Cards statistiche -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div 
+        *ngFor="let card of dashboardCards; let i = index" 
+        class="card bg-base-100 shadow-sm hover:shadow-lg transition-all duration-200 hover:scale-105">
         <div class="card-body">
-          <h3 class="text-lg font-semibold text-base-content mb-4">Attività Recenti</h3>
-          
-          <div class="space-y-4">
-            <div *ngFor="let activity of recentActivities" class="flex items-start space-x-3">
-              <div class="avatar placeholder">
-                <div class="bg-primary/10 text-primary rounded-full w-8">
-                  <i class="fas fa-bell text-sm"></i>
+          <div class="flex items-center justify-between">
+            <div class="flex-1">
+              <div class="flex items-center mb-3">
+                <div class="rounded-lg p-3 mr-4" [ngClass]="card.color + '/10'">
+                  <i [class]="card.icon + ' text-2xl'" [ngClass]="card.color.replace('bg-', 'text-')"></i>
+                </div>
+                <div class="text-sm text-base-content/60 font-medium uppercase tracking-wide">
+                  {{ card.title }}
                 </div>
               </div>
-              <div class="flex-1 min-w-0">
-                <div class="text-sm font-medium text-base-content">{{ activity.action }}</div>
-                <div class="text-sm text-base-content/70">{{ activity.user }}</div>
-                <div class="text-xs text-base-content/50">{{ activity.time }}</div>
+              <div class="text-2xl font-bold text-base-content mb-2">
+                <span *ngIf="card.title.includes('Budget') || card.title.includes('Mensile')">{{ formatCurrency(card.value) }}</span>
+                <span *ngIf="!card.title.includes('Budget') && !card.title.includes('Mensile')">{{ card.value }}</span>
+              </div>
+              <div class="flex items-center text-sm" *ngIf="card.subtitle">
+                <i class="fas fa-trending-up text-success text-sm mr-1"></i>
+                <span class="text-base-content/70">{{ card.subtitle }}</span>
               </div>
             </div>
           </div>
-          
-          <div class="divider"></div>
-          
-          <button class="btn btn-outline btn-sm w-full">
-            Vedi tutte le attività
-          </button>
         </div>
       </div>
+    </div>
 
-      <!-- Azioni rapide -->
-      <div class="card bg-base-100 shadow-sm">
-        <div class="card-body">
-          <h3 class="text-lg font-semibold text-base-content mb-4">Azioni Rapide</h3>
-          
-          <div class="space-y-3">
-            <button class="btn btn-primary w-full">
-              <i class="fas fa-user-plus mr-2"></i>
-              Nuovo Dipendente
-            </button>
-            <button class="btn btn-success w-full">
-              <i class="fas fa-calendar-alt mr-2"></i>
-              Gestisci Ferie
-            </button>
-            <button class="btn btn-info w-full">
-              <i class="fas fa-file-alt mr-2"></i>
-              Genera Report
-            </button>
+    <!-- Contenuto principale -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Sezione sinistra - Grafici e statistiche -->
+      <div class="lg:col-span-2 space-y-6">
+        <!-- Grafico presenze (per azienda) o ore lavorate (per dipendente) -->
+        <div class="card bg-base-100 shadow-sm">
+          <div class="card-body">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="text-lg font-semibold text-base-content">
+                  {{ isCompanyUser ? 'Andamento Presenze' : 'Le Mie Ore' }}
+                </h3>
+                <p class="text-base-content/60 text-sm">
+                  {{ isCompanyUser ? 'Ultimi 7 giorni' : 'Andamento settimanale' }}
+                </p>
+              </div>
+              <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-sm">
+                  <i class="fas fa-ellipsis-v"></i>
+                </div>
+                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                  <li><a><i class="fas fa-download mr-2"></i>Esporta</a></li>
+                  <li><a><i class="fas fa-refresh mr-2"></i>Aggiorna</a></li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="flex items-center justify-center h-64 bg-base-200 rounded-lg">
+              <div class="text-center">
+                <div class="bg-primary/10 rounded-full p-4 mx-auto mb-4 w-16 h-16 flex items-center justify-center">
+                  <i class="fas fa-chart-bar text-primary text-2xl"></i>
+                </div>
+                <h4 class="text-lg font-medium text-base-content mb-2">
+                  {{ isCompanyUser ? 'Grafico Presenze' : 'Grafico Ore Lavorate' }}
+                </h4>
+                <p class="text-base-content/60 text-sm">Integra qui la tua libreria di grafici preferita</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Statistiche aggiuntive -->
+        <div class="card bg-base-100 shadow-sm">
+          <div class="card-body">
+            <h3 class="text-lg font-semibold text-base-content mb-4">
+              {{ isCompanyUser ? 'Statistiche Mensili' : 'Il Mio Riepilogo' }}
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div *ngIf="isCompanyUser" class="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                <div class="text-2xl font-bold text-blue-600">95%</div>
+                <div class="text-sm text-base-content/70">Presenza Media</div>
+              </div>
+              <div *ngIf="isCompanyUser" class="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                <div class="text-2xl font-bold text-green-600">18</div>
+                <div class="text-sm text-base-content/70">Giorni Lavorati</div>
+              </div>
+              <div *ngIf="isCompanyUser" class="text-center p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                <div class="text-2xl font-bold text-yellow-600">12</div>
+                <div class="text-sm text-base-content/70">Ore Straordinari</div>
+              </div>
+
+              <!-- Statistiche per dipendenti -->
+              <div *ngIf="!isCompanyUser" class="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                <div class="text-2xl font-bold text-blue-600">160</div>
+                <div class="text-sm text-base-content/70">Ore Questo Mese</div>
+              </div>
+              <div *ngIf="!isCompanyUser" class="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                <div class="text-2xl font-bold text-green-600">22</div>
+                <div class="text-sm text-base-content/70">Giorni Lavorati</div>
+              </div>
+              <div *ngIf="!isCompanyUser" class="text-center p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                <div class="text-2xl font-bold text-yellow-600">8</div>
+                <div class="text-sm text-base-content/70">Straordinari</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Task in scadenza -->
-      <div class="card bg-base-100 shadow-sm">
-        <div class="card-body">
-          <h3 class="text-lg font-semibold text-base-content mb-4">Task in Scadenza</h3>
-          
-          <div class="space-y-3">
-            <div class="alert alert-warning">
-              <i class="fas fa-clock"></i>
-              <div>
-                <div class="text-sm font-medium">Valutazioni Performance</div>
-                <div class="text-xs">Scadenza: 2 giorni</div>
+      <!-- Sezione destra -->
+      <div class="space-y-6">
+        <!-- Attività recenti -->
+        <div class="card bg-base-100 shadow-sm">
+          <div class="card-body">
+            <h3 class="text-lg font-semibold text-base-content mb-4">
+              {{ isCompanyUser ? 'Attività Recenti' : 'Le Mie Attività' }}
+            </h3>
+            
+            <div class="space-y-4">
+              <div *ngFor="let activity of recentActivities" class="flex items-start space-x-3">
+                <div class="avatar placeholder">
+                  <div class="bg-primary/10 text-primary rounded-full w-8">
+                    <i class="fas fa-bell text-sm"></i>
+                  </div>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-sm font-medium text-base-content">{{ activity.action }}</div>
+                  <div class="text-sm text-base-content/70">{{ activity.user }}</div>
+                  <div class="text-xs text-base-content/50">{{ activity.time }}</div>
+                </div>
               </div>
             </div>
             
-            <div class="alert alert-error">
-              <i class="fas fa-exclamation-triangle"></i>
-              <div>
-                <div class="text-sm font-medium">Contratti in Scadenza</div>
-                <div class="text-xs">Scadenza: domani</div>
-              </div>
-            </div>
+            <div class="divider"></div>
             
-            <div class="alert alert-info">
-              <i class="fas fa-calendar"></i>
-              <div>
-                <div class="text-sm font-medium">Revisione Buste Paga</div>
-                <div class="text-xs">Scadenza: 1 settimana</div>
+            <button class="btn btn-outline btn-sm w-full">
+              Vedi tutte le attività
+            </button>
+          </div>
+        </div>
+
+        <!-- Azioni rapide -->
+        <div class="card bg-base-100 shadow-sm">
+          <div class="card-body">
+            <h3 class="text-lg font-semibold text-base-content mb-4">Azioni Rapide</h3>
+            
+            <div class="space-y-3">
+              <button 
+                *ngFor="let action of getQuickActions()" 
+                class="btn w-full"
+                [ngClass]="action.color"
+                (click)="navigateToAction(action.route)">
+                <i [class]="action.icon + ' mr-2'"></i>
+                {{ action.label }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task in scadenza / Promemoria -->
+        <div class="card bg-base-100 shadow-sm">
+          <div class="card-body">
+            <h3 class="text-lg font-semibold text-base-content mb-4">
+              {{ isCompanyUser ? 'Task in Scadenza' : 'I Miei Promemoria' }}
+            </h3>
+            
+            <div class="space-y-3">
+              <div *ngIf="isCompanyUser" class="alert alert-warning">
+                <i class="fas fa-clock"></i>
+                <div>
+                  <div class="text-sm font-medium">Valutazioni Performance</div>
+                  <div class="text-xs">Scadenza: 2 giorni</div>
+                </div>
+              </div>
+              
+              <div *ngIf="isCompanyUser" class="alert alert-error">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>
+                  <div class="text-sm font-medium">Contratti in Scadenza</div>
+                  <div class="text-xs">Scadenza: domani</div>
+                </div>
+              </div>
+              
+              <div class="alert alert-info">
+                <i class="fas fa-calendar"></i>
+                <div>
+                  <div class="text-sm font-medium">
+                    {{ isCompanyUser ? 'Revisione Buste Paga' : 'Richiesta Ferie Estate' }}
+                  </div>
+                  <div class="text-xs">
+                    {{ isCompanyUser ? 'Scadenza: 1 settimana' : 'Da completare entro marzo' }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Promemoria specifici per dipendenti -->
+              <div *ngIf="!isCompanyUser" class="alert alert-warning">
+                <i class="fas fa-file-alt"></i>
+                <div>
+                  <div class="text-sm font-medium">Aggiorna Documenti</div>
+                  <div class="text-xs">Certificato medico in scadenza</div>
+                </div>
               </div>
             </div>
           </div>

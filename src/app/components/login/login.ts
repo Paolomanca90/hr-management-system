@@ -66,4 +66,13 @@ export class Login implements OnInit {
         }
       });
   }
+
+  fillDemoCredentials(username: string, domain: string): void {
+    this.loginForm.patchValue({
+      username: username,
+      password: 'demo123', // Password demo
+      domain: domain
+    });
+    this.error = '';
+  }
 }

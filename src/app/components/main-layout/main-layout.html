@@ -5,7 +5,8 @@
   <div class="drawer-side">
     <label for="drawer-toggle" aria-label="close sidebar" class="drawer-overlay"></label>
     <aside class="min-h-full bg-base-100 dark:bg-base-300" 
-           [class.w-64]="sidenavOpened" 
+           [class.w-80]="sidenavOpened && isCompanyUser" 
+           [class.w-64]="sidenavOpened && !isCompanyUser"
            [class.w-16]="!sidenavOpened">
       
       <!-- Header della sidebar -->
@@ -16,7 +17,9 @@
           </div>
           <div *ngIf="sidenavOpened" class="text-base-content">
             <h2 class="text-lg font-bold">HR System</h2>
-            <p class="text-base-content/70 text-sm">Management</p>
+            <p class="text-base-content/70 text-sm">
+              {{ isCompanyUser ? 'Gestione Aziendale' : 'Portale Dipendente' }}
+            </p>
           </div>
         </div>
         
@@ -31,26 +34,77 @@
             <div class="text-base-content flex-1 min-w-0">
               <div class="font-medium truncate">{{ currentUser.username }}</div>
               <div class="text-base-content/70 text-sm truncate">{{ currentUser.company }}</div>
+              <div class="text-xs text-primary capitalize">{{ currentUser.role }}</div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Menu di navigazione -->
-      <ul class="menu p-4 space-y-2">
-        <li *ngFor="let item of menuItems">
-          <a [routerLink]="item.route"
-             routerLinkActive="active"
-             class="flex items-center transition-all duration-200 group">
-            <i [class]="item.icon + ' text-lg'" 
-               [class.mr-3]="sidenavOpened"></i>
-            <span *ngIf="sidenavOpened" class="font-medium">{{ item.label }}</span>
-          </a>
-        </li>
-      </ul>
+      <div class="flex-1 overflow-y-auto">
+        <ul class="menu p-2 space-y-1" *ngIf="sidenavOpened">
+          <li *ngFor="let item of menuItems">
+            <!-- Menu item con figli (espandibile) -->
+            <div *ngIf="hasChildren(item)">
+              <details [open]="item.expanded">
+                <summary 
+                  class="flex items-center cursor-pointer hover:bg-base-200 rounded-lg p-2 transition-all duration-200"
+                  (click)="toggleMenuItem(item)"
+                  [class.text-primary]="isMenuItemActive(item)">
+                  <i [class]="item.icon + ' text-lg mr-3'"></i>
+                  <span class="font-medium flex-1">{{ item.label }}</span>
+                  <span *ngIf="item.badge" class="badge badge-primary badge-sm">{{ item.badge }}</span>
+                </summary>
+                
+                <ul class="ml-6 mt-2 space-y-1">
+                  <li *ngFor="let child of item.children">
+                    <a 
+                      [routerLink]="child.route"
+                      routerLinkActive="active"
+                      class="flex items-center p-2 rounded-lg hover:bg-base-200 transition-all duration-200 text-sm"
+                      [class.text-primary]="isMenuItemActive(child)"
+                      [class.bg-blue-100]="isMenuItemActive(child)">
+                      <i [class]="child.icon + ' text-sm mr-3 w-4'"></i>
+                      <span>{{ child.label }}</span>
+                      <span *ngIf="child.badge" class="badge badge-primary badge-xs ml-auto">{{ child.badge }}</span>
+                    </a>
+                  </li>
+                </ul>
+              </details>
+            </div>
+
+            <!-- Menu item semplice (senza figli) -->
+            <a *ngIf="!hasChildren(item)"
+               [routerLink]="item.route"
+               routerLinkActive="active"
+               class="flex items-center p-2 rounded-lg hover:bg-base-200 transition-all duration-200"
+               [class.text-primary]="isMenuItemActive(item)"
+               [class.bg-blue-100]="isMenuItemActive(item)">
+              <i [class]="item.icon + ' text-lg mr-3'"></i>
+              <span class="font-medium">{{ item.label }}</span>
+              <span *ngIf="item.badge" class="badge badge-primary badge-sm ml-auto">{{ item.badge }}</span>
+            </a>
+          </li>
+        </ul>
+
+        <!-- Menu compatto quando la sidebar è chiusa -->
+        <ul class="menu p-2 space-y-1" *ngIf="!sidenavOpened">
+          <li *ngFor="let item of menuItems">
+            <div class="tooltip tooltip-right" [attr.data-tip]="item.label">
+              <a 
+                [routerLink]="item.route || '/app/dashboard'"
+                class="flex items-center justify-center p-2 rounded-lg hover:bg-base-200 transition-all duration-200"
+                [class.text-primary]="isMenuItemActive(item)"
+                [class.bg-blue-100]="isMenuItemActive(item)">
+                <i [class]="item.icon + ' text-lg'"></i>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
 
       <!-- Footer della sidebar -->
-      <div class="absolute bottom-4 left-4 right-4 space-y-2" *ngIf="sidenavOpened">
+      <div class="p-4 border-t border-base-300 space-y-2" *ngIf="sidenavOpened">
         <!-- Toggle Dark Mode -->
         <div class="flex items-center justify-center w-full btn btn-ghost btn-sm" (click)="toggleTheme()">      
           <label class="swap swap-rotate">
@@ -68,8 +122,8 @@
         </button>
       </div>
 
-      <!-- Toggle per sidebar compatta -->
-      <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2" *ngIf="!sidenavOpened">
+      <!-- Footer compatto -->
+      <div class="p-2 border-t border-base-300 space-y-2" *ngIf="!sidenavOpened">
         <div class="tooltip tooltip-right" [attr.data-tip]="getThemeLabel()">
           <label class="swap swap-rotate btn btn-ghost btn-sm btn-circle">
             <input type="checkbox" 
@@ -80,7 +134,7 @@
           </label>
         </div>
         
-        <div class="tooltip tooltip-right mt-2" [attr.data-tip]="'Logout'">
+        <div class="tooltip tooltip-right" [attr.data-tip]="'Logout'">
           <button class="btn btn-error btn-sm btn-circle" (click)="logout()">
             <i class="fas fa-sign-out-alt"></i>
           </button>
@@ -106,7 +160,12 @@
       </div>
       
       <div class="flex-1">
-        <span class="text-xl font-semibold ml-2">HR Management System</span>
+        <span class="text-xl font-semibold ml-2">
+          HR Management System
+          <span class="text-sm text-base-content/60 ml-2">
+            - {{ isCompanyUser ? 'Pannello Aziendale' : 'Portale Dipendente' }}
+          </span>
+        </span>
       </div>
       
       <div class="flex-none">
@@ -143,6 +202,7 @@
             <li class="menu-title">
               <span>{{ currentUser?.username }}</span>
               <span class="text-xs">{{ currentUser?.company }}</span>
+              <span class="text-xs text-primary capitalize">{{ currentUser?.role }}</span>
             </li>
             <li><a><i class="fas fa-user mr-2"></i> Profilo</a></li>
             <li><a><i class="fas fa-cog mr-2"></i> Impostazioni</a></li>

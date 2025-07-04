@@ -1,18 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-export interface Employee {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  position: string;
-  department: string;
-  hireDate: Date;
-  salary: number;
-  status: 'active' | 'inactive' | 'on-leave';
-}
+import { DataService, Employee } from '../../services/data.service';
+import { AuthService } from '../../services/auth.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-employees',
@@ -24,89 +15,65 @@ export interface Employee {
   templateUrl: './employees.html',
   styleUrl: './employees.scss'
 })
-export class Employees implements OnInit {
+export class Employees implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   
-  employees: Employee[] = [
-    {
-      id: 1,
-      firstName: 'Mario',
-      lastName: 'Rossi',
-      email: 'mario.rossi@company.com',
-      position: 'Sviluppatore Senior',
-      department: 'IT',
-      hireDate: new Date('2020-03-15'),
-      salary: 45000,
-      status: 'active'
-    },
-    {
-      id: 2,
-      firstName: 'Giulia',
-      lastName: 'Bianchi',
-      email: 'giulia.bianchi@company.com',
-      position: 'Marketing Manager',
-      department: 'Marketing',
-      hireDate: new Date('2019-07-20'),
-      salary: 42000,
-      status: 'active'
-    },
-    {
-      id: 3,
-      firstName: 'Luca',
-      lastName: 'Verdi',
-      email: 'luca.verdi@company.com',
-      position: 'Contabile',
-      department: 'Amministrazione',
-      hireDate: new Date('2021-01-10'),
-      salary: 35000,
-      status: 'on-leave'
-    },
-    {
-      id: 4,
-      firstName: 'Sara',
-      lastName: 'Neri',
-      email: 'sara.neri@company.com',
-      position: 'HR Specialist',
-      department: 'Risorse Umane',
-      hireDate: new Date('2018-11-05'),
-      salary: 38000,
-      status: 'active'
-    },
-    {
-      id: 5,
-      firstName: 'Alessandro',
-      lastName: 'Blu',
-      email: 'alessandro.blu@company.com',
-      position: 'Grafico',
-      department: 'Design',
-      hireDate: new Date('2022-09-12'),
-      salary: 32000,
-      status: 'active'
-    },
-    {
-      id: 6,
-      firstName: 'Francesca',
-      lastName: 'Gialli',
-      email: 'francesca.gialli@company.com',
-      position: 'Project Manager',
-      department: 'IT',
-      hireDate: new Date('2020-05-03'),
-      salary: 48000,
-      status: 'inactive'
-    }
-  ];
-
+  employees: Employee[] = [];
   filteredEmployees: Employee[] = [];
+  departments: string[] = [];
+  
   searchTerm: string = '';
   selectedDepartment: string = '';
   selectedStatus: string = '';
+  
+  loading = true;
+  isCompanyUser = false;
 
-  departments: string[] = [];
-
-  constructor() { }
+  constructor(
+    private dataService: DataService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
-    this.filteredEmployees = [...this.employees];
-    this.departments = [...new Set(this.employees.map(emp => emp.department))];
+    this.isCompanyUser = this.authService.isCompanyUser();
+    this.loadEmployees();
+    this.loadDepartments();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private loadEmployees(): void {
+    this.loading = true;
+    
+    this.dataService.getEmployees()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (employees) => {
+          this.employees = employees;
+          this.filteredEmployees = [...employees];
+          this.loading = false;
+        },
+        error: (error) => {
+          console.error('Error loading employees:', error);
+          this.loading = false;
+        }
+      });
+  }
+
+  private loadDepartments(): void {
+    this.dataService.getDepartments()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (departments) => {
+          this.departments = departments;
+        },
+        error: (error) => {
+          console.error('Error loading departments:', error);
+        }
+      });
   }
 
   applyFilters(): void {
@@ -153,35 +120,65 @@ export class Employees implements OnInit {
   }
 
   editEmployee(employee: Employee): void {
+    if (!this.isCompanyUser) {
+      alert('Operazione non permessa');
+      return;
+    }
     console.log('Modifica dipendente:', employee);
+    // Implementare modal di modifica
   }
 
   viewEmployee(employee: Employee): void {
     console.log('Visualizza dipendente:', employee);
+    // Implementare modal di visualizzazione
   }
 
   deleteEmployee(employee: Employee): void {
+    if (!this.isCompanyUser) {
+      alert('Operazione non permessa');
+      return;
+    }
+    
     if (confirm(`Sei sicuro di voler eliminare ${employee.firstName} ${employee.lastName}?`)) {
-      this.employees = this.employees.filter(emp => emp.id !== employee.id);
-      this.applyFilters();
+      this.dataService.deleteEmployee(employee.id)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (success) => {
+            if (success) {
+              this.loadEmployees();
+            } else {
+              alert('Errore durante l\'eliminazione');
+            }
+          },
+          error: (error) => {
+            console.error('Error deleting employee:', error);
+            alert('Errore durante l\'eliminazione');
+          }
+        });
     }
   }
 
   addNewEmployee(): void {
+    if (!this.isCompanyUser) {
+      alert('Operazione non permessa');
+      return;
+    }
     console.log('Aggiungi nuovo dipendente');
+    // Implementare modal di aggiunta
   }
 
   refreshEmployees(): void {
-    console.log('Aggiorna lista dipendenti');
-    this.applyFilters();
+    this.loadEmployees();
   }
 
   sendMessage(employee: Employee): void {
     console.log('Invia messaggio a:', employee);
+    // Implementare sistema di messaggistica
   }
 
   viewProfile(employee: Employee): void {
     console.log('Visualizza profilo di:', employee);
+    // Implementare visualizzazione profilo
   }
 
   formatCurrency(value: number): string {
@@ -189,5 +186,13 @@ export class Employees implements OnInit {
       style: 'currency', 
       currency: 'EUR' 
     }).format(value);
+  }
+
+  canEditEmployees(): boolean {
+    return this.isCompanyUser && this.authService.hasPermission('employee_management');
+  }
+
+  canViewSalary(): boolean {
+    return this.isCompanyUser && this.authService.hasPermission('salary_view');
   }
 }
